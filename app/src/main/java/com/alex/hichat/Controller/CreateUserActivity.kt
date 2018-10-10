@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import com.alex.hichat.R
+import com.alex.hichat.Services.AuthService
 import kotlinx.android.synthetic.main.activity_create_user.*
 import java.util.*
 
@@ -29,7 +30,7 @@ class CreateUserActivity : AppCompatActivity() {
         val avatar = random.nextInt(28)
 
         // Conditional logic to set up a background color
-        if(color == 0) {
+        if (color == 0) {
             userAvatar = "light$avatar"
         } else {
             userAvatar = "dark$avatar"
@@ -49,7 +50,7 @@ class CreateUserActivity : AppCompatActivity() {
         val g = random.nextInt(255)
         val b = random.nextInt(255)
         // Combined all generated numbers together and give output
-        createAvatarImgView.setBackgroundColor(Color.rgb(r,g,b))
+        createAvatarImgView.setBackgroundColor(Color.rgb(r, g, b))
 
         // Getting values for iOS and macOS from 0-1 by converting to double and / 255 and saved vals to API
         val savedR = r.toDouble() / 255
@@ -61,6 +62,9 @@ class CreateUserActivity : AppCompatActivity() {
     }
 
     fun createUserBtnClicked(view: View) {
-
+        AuthService.registerUser(this, "abc@abc.com", "12345") { complete ->
+            if (complete) {
+            }
+        }
     }
 }
