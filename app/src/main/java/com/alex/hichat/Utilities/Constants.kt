@@ -8,3 +8,5 @@ const val BASE_URL = "https://hismackchat.herokuapp.com/v1/"
 const val URL_REGISTER = "${BASE_URL}account/register"
 // URL for login.
 const val URL_LOGIN = "${BASE_URL}account/login"
+// URL for create an user
+const val URL_CREATE_USER = "${BASE_URL}user/add"

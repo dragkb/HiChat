@@ -1,18 +1,20 @@
 package com.alex.hichat.Controller
 
+import android.content.Context
 import android.graphics.Color
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import com.alex.hichat.R
 import com.alex.hichat.Services.AuthService
+import com.alex.hichat.Services.UserDataService
 import kotlinx.android.synthetic.main.activity_create_user.*
 import java.util.*
 
 class CreateUserActivity : AppCompatActivity() {
 
     // userAvatar - default avatar for every user
-    var userAvatar = "profiledefault"
+    var userAvatar = "profileDefault"
     // avatarColor - needs for messaging to iOS or macOS, because they have color bounds from 0-1
     var avatarColor = "[0.5, 0.5, 0.5, 1]"
 
@@ -62,14 +64,23 @@ class CreateUserActivity : AppCompatActivity() {
     }
 
     fun createUserBtnClicked(view: View) {
+
+        val userName = createUserNameTxt.text.toString()
         val email = createEmailTxt.text.toString()
         val password = createPasswordTxt.text.toString()
+
         AuthService.registerUser(this, email, password) { registerSuccess ->
             if (registerSuccess) {
-                AuthService.loginUser(this, email, password) {loginSuccess ->
-                    if(loginSuccess){
-                        println(AuthService.authToken)
-                        println(AuthService.userEmail)
+                AuthService.loginUser(this, email, password) { loginSuccess ->
+                    if (loginSuccess) {
+                        AuthService.createUser(this, userName, email, userAvatar, avatarColor) { createSuccess ->
+                            if (createSuccess) {
+                                println(UserDataService.avatarName)
+                                println(UserDataService.avatarColor)
+                                println(UserDataService.name)
+                                finish() // For dismiss activity use method finish()
+                            }
+                        }
                     }
                 }
             }
