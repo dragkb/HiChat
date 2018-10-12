@@ -10,3 +10,6 @@ const val URL_REGISTER = "${BASE_URL}account/register"
 const val URL_LOGIN = "${BASE_URL}account/login"
 // URL for create an user
 const val URL_CREATE_USER = "${BASE_URL}user/add"
+
+// Broadcast const to say another activity that something changed
+const val BROADCAST_USER_DATA_CHANGE = "BROADCAST_USER_DATA_CHANGE"

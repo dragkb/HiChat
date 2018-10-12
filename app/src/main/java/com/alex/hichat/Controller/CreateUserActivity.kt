@@ -1,13 +1,17 @@
 package com.alex.hichat.Controller
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v4.content.LocalBroadcastManager
 import android.view.View
+import android.widget.Toast
 import com.alex.hichat.R
 import com.alex.hichat.Services.AuthService
 import com.alex.hichat.Services.UserDataService
+import com.alex.hichat.Utilities.BROADCAST_USER_DATA_CHANGE
 import kotlinx.android.synthetic.main.activity_create_user.*
 import java.util.*
 
@@ -21,6 +25,8 @@ class CreateUserActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_user)
+        // Makes the Spinner invisible
+        createSpinner.visibility = View.INVISIBLE
     }
 
     fun generateUserAvatar(view: View) {
@@ -65,26 +71,60 @@ class CreateUserActivity : AppCompatActivity() {
 
     fun createUserBtnClicked(view: View) {
 
+        enableSpinner(true)
         val userName = createUserNameTxt.text.toString()
         val email = createEmailTxt.text.toString()
         val password = createPasswordTxt.text.toString()
 
-        AuthService.registerUser(this, email, password) { registerSuccess ->
-            if (registerSuccess) {
-                AuthService.loginUser(this, email, password) { loginSuccess ->
-                    if (loginSuccess) {
-                        AuthService.createUser(this, userName, email, userAvatar, avatarColor) { createSuccess ->
-                            if (createSuccess) {
-                                println(UserDataService.avatarName)
-                                println(UserDataService.avatarColor)
-                                println(UserDataService.name)
-                                finish() // For dismiss activity use method finish()
+        // Fields validation
+        if(userName.isNotEmpty() && email.isNotEmpty() && password.isNotEmpty()) {
+            AuthService.registerUser(this, email, password) { registerSuccess ->
+                if (registerSuccess) {
+                    AuthService.loginUser(this, email, password) { loginSuccess ->
+                        if (loginSuccess) {
+                            AuthService.createUser(this, userName, email, userAvatar, avatarColor) { createSuccess ->
+                                if (createSuccess) {
+                                    // Create an Intent for broadcast
+                                    val userDataChanged = Intent(BROADCAST_USER_DATA_CHANGE)
+                                    // Creating broadcast which saying that data changed to other activities
+                                    LocalBroadcastManager.getInstance(this).sendBroadcast(userDataChanged)
+                                    enableSpinner(false)
+                                    finish() // For dismiss activity use method finish()
+                                } else {
+                                    errorToast()
+                                }
                             }
+                        } else{
+                            errorToast()
                         }
                     }
+                } else {
+                    errorToast()
                 }
             }
+        } else {
+            // Error message if fields are not filled in completely
+            Toast.makeText(this, "Make sure user name, email and password are filled in", Toast.LENGTH_SHORT).show()
+            enableSpinner(false)
         }
+
+    }
+    // Error message to usets
+    fun errorToast(){
+        Toast.makeText(this, "Something went wrong, please try again", Toast.LENGTH_LONG).show()
+    }
+
+    // This function makes the spinner either visible or not and set other buttons to disable or enabled mode when createUserBtn clicked
+    fun enableSpinner(enable: Boolean){
+        if (enable) {
+            createSpinner.visibility = View.VISIBLE
+        } else {
+            createSpinner.visibility = View.INVISIBLE
+        }
+        // !enable = false, enable = true. If if statement equal to true then all elements under are true, and false if opposite
+        createAvatarImgView.isEnabled = !enable
+        backgroundColorBtn.isEnabled = !enable
+        createUserBtn.isEnabled = !enable
     }
 
 }
