@@ -62,8 +62,8 @@ class CreateUserActivity : AppCompatActivity() {
 
         // Getting values for iOS and macOS from 0-1 by converting to double and / 255 and saved vals to API
         val savedR = r.toDouble() / 255
-        val savedG = r.toDouble() / 255
-        val savedB = r.toDouble() / 255
+        val savedG = g.toDouble() / 255
+        val savedB = b.toDouble() / 255
         // Combined all generated numbers together and give output for iOS and macOS devices
         avatarColor = "[$savedR, $savedG, $savedB, 1]"
         // println(avatarColor) // check the logcat Info for numbers that sent to the API

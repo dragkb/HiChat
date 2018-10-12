@@ -20,5 +20,7 @@ class LoginActivity : AppCompatActivity() {
     fun loginCreateUserBtnClicked(view: View) {
         val createUserIntent = Intent(this, CreateUserActivity::class.java)
         startActivity(createUserIntent)
+        // finish() work like Stack returns to back activitys
+        finish()
     }
 }
