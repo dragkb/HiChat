@@ -27,11 +27,9 @@ object UserDataService {
                 .replace("[", "")
                 .replace("]", "")
                 .replace(",", "")
-
         var r = 0
         var g = 0
         var b = 0
-
         val scanner = Scanner(strippedColor)
         if (scanner.hasNext()){
             r = (scanner.nextDouble() * 255).toInt()

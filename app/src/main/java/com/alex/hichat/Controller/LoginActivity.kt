@@ -9,8 +9,6 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import com.alex.hichat.R
 import com.alex.hichat.Services.AuthService
-import com.alex.hichat.Services.UserDataService
-import kotlinx.android.synthetic.main.activity_create_user.*
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity() {
@@ -18,12 +16,11 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-
+        // Make progress spinner invisible
         loginSpinner.visibility = View.INVISIBLE
     }
 
     fun loginLoginBtnClicked(view: View) {
-
         enableSpinner(true)
         val email = loginEmailTxt.text.toString()
         val password = loginPasswordTxt.text.toString()
@@ -56,12 +53,12 @@ class LoginActivity : AppCompatActivity() {
     }
 
     // Error message to users
-    fun errorToast(){
+    fun errorToast() {
         Toast.makeText(this, "Something went wrong, please try again", Toast.LENGTH_LONG).show()
     }
 
     // This function makes the spinner either visible or not and set other buttons to disable or enabled mode when createUserBtn clicked
-    fun enableSpinner(enable: Boolean){
+    fun enableSpinner(enable: Boolean) {
         if (enable) {
             loginSpinner.visibility = View.VISIBLE
         } else {
@@ -74,10 +71,8 @@ class LoginActivity : AppCompatActivity() {
 
     // Hiding soft keyboard
     fun hideKeyboard() {
-
         val inputManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         if (inputManager.isAcceptingText) {
-
             inputManager.hideSoftInputFromWindow(currentFocus.windowToken, 0)
         }
     }
