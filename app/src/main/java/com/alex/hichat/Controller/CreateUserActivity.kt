@@ -109,7 +109,7 @@ class CreateUserActivity : AppCompatActivity() {
         }
 
     }
-    // Error message to usets
+    // Error message to users
     fun errorToast(){
         Toast.makeText(this, "Something went wrong, please try again", Toast.LENGTH_LONG).show()
     }
