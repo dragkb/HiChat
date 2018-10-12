@@ -5,6 +5,9 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import com.alex.hichat.R
+import com.alex.hichat.Services.AuthService
+import com.alex.hichat.Services.UserDataService
+import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity() {
 
@@ -14,13 +17,24 @@ class LoginActivity : AppCompatActivity() {
     }
 
     fun loginLoginBtnClicked(view: View) {
+        val email = loginEmailTxt.text.toString()
+        val password = loginPasswordTxt.text.toString()
 
+        AuthService.loginUser(this, email, password) { loginSuccess ->
+            if(loginSuccess){
+                AuthService.findUserByEmail(this) { findSuccess ->
+                    if (findSuccess) {
+                        finish()
+                    }
+                }
+            }
+        }
     }
 
     fun loginCreateUserBtnClicked(view: View) {
         val createUserIntent = Intent(this, CreateUserActivity::class.java)
         startActivity(createUserIntent)
-        // finish() work like Stack returns to back activitys
+        // finish() work like Stack returns to previous activity
         finish()
     }
 }

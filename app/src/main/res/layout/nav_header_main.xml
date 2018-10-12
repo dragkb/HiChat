@@ -28,7 +28,6 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:text="AlexK"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         app:layout_constraintStart_toEndOf="@+id/userImgNavHeader"
         app:layout_constraintTop_toTopOf="@+id/userImgNavHeader"
@@ -39,7 +38,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:text="alex@abc.com"
         app:layout_constraintStart_toEndOf="@+id/userImgNavHeader"
         app:layout_constraintTop_toBottomOf="@+id/userNameNavHeader"
         tools:text="alex@abc.com" />

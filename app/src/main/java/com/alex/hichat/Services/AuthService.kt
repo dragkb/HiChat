@@ -1,10 +1,10 @@
 package com.alex.hichat.Services
 
 import android.content.Context
+import android.content.Intent
+import android.support.v4.content.LocalBroadcastManager
 import android.util.Log
-import com.alex.hichat.Utilities.URL_CREATE_USER
-import com.alex.hichat.Utilities.URL_LOGIN
-import com.alex.hichat.Utilities.URL_REGISTER
+import com.alex.hichat.Utilities.*
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.StringRequest
@@ -18,8 +18,8 @@ object AuthService {
     var userEmail = ""
     var authToken = ""
 
-    // For volley API we need context, then email and password for GET request and
-    // completion handler to understand if our request finished successful or not
+    // For volley API we need context, and the body(check Postman body) of our request and
+    // completion handler to understand if our request finished successfully or not
     fun registerUser(context: Context, email: String, password: String, complete: (Boolean) -> Unit) {
 
         // Json object that we are passing
@@ -136,5 +136,45 @@ object AuthService {
         }
 
         Volley.newRequestQueue(context).add(createRequest)
+    }
+
+    // Don't need the body since its only Get request
+    fun findUserByEmail(context: Context, complete: (Boolean) -> Unit) {
+
+        val findRequest = object : JsonObjectRequest(Method.GET, "$URL_FIND_USER_BY_EMAIL$userEmail", null, Response.Listener { response ->
+
+            try {
+                UserDataService.name = response.getString("name")
+                UserDataService.email = response.getString("email")
+                UserDataService.avatarName = response.getString("avatarName")
+                UserDataService.avatarColor = response.getString("avatarColor")
+                UserDataService.id = response.getString("_id")
+
+                // Sends broadcast to activities that data has been changed
+                val userDataChange = Intent(BROADCAST_USER_DATA_CHANGE)
+                LocalBroadcastManager.getInstance(context).sendBroadcast(userDataChange)
+                complete(true)
+
+            } catch (e: JSONException) {
+                Log.d("JSON", "EXC" + e.localizedMessage)
+            }
+
+        }, Response.ErrorListener { error ->
+            Log.d("ERROR", "Could not find user by email")
+            complete(false)
+
+        }) {
+            override fun getBodyContentType(): String {
+                return "application/json; charset=utf-8"
+            }
+
+            override fun getHeaders(): MutableMap<String, String> {
+                val headers = HashMap<String, String>()
+                headers.put("Authorization", "Bearer $authToken")
+                return headers
+            }
+        }
+
+        Volley.newRequestQueue(context).add(findRequest)
     }
 }

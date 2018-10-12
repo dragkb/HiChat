@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity() {
         // if login then we need to see logout and moved to activity after logout
         if (AuthService.isLoggedIn){
             UserDataService.logout()
-            userNameNavHeader.text = "Login"
+            userNameNavHeader.text = ""
             userEmailNavHeader.text = ""
             userImgNavHeader.setImageResource(R.drawable.profiledefault)
             userImgNavHeader.setBackgroundColor(Color.TRANSPARENT)
