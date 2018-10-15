@@ -70,7 +70,6 @@ class CreateUserActivity : AppCompatActivity() {
     }
 
     fun createUserBtnClicked(view: View) {
-
         enableSpinner(true)
         val userName = createUserNameTxt.text.toString()
         val email = createEmailTxt.text.toString()

@@ -36,6 +36,7 @@
         android:layout_marginRight="18dp"
         android:layout_marginBottom="18dp"
         android:ems="10"
+        android:hint="channel description"
         android:inputType="textPersonName"
         android:textColor="@android:color/darker_gray"
         tools:text="channel description" />

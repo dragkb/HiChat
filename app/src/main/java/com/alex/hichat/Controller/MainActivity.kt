@@ -13,6 +13,7 @@ import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.ArrayAdapter
 import android.widget.TextView
 import com.alex.hichat.Model.Channel
 import com.alex.hichat.R
@@ -31,19 +32,30 @@ class MainActivity : AppCompatActivity() {
 
     // Declaring socket URL. When user connected you can track the connection on heroku API server: "a user connected".
     val socket = IO.socket(SOCKET_URL)
+    lateinit var channelAdapter: ArrayAdapter<Channel>
+
+    private fun setupAdapters() {
+        channelAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, MessageService.channels)
+        channel_list.adapter = channelAdapter
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-        socket.connect() // Socket is on and ready to connect
+        // Socket is on and ready to connect
+        socket.connect()
+        // save it to Data base and output to Log if created
+        // Socketio - Send out(emit) message from API to those connected in the room
         socket.on("channelCreated", onNewChannel)
 
         val toggle = ActionBarDrawerToggle(
                 this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
+
+        setupAdapters()
     }
 
     override fun onResume() {
@@ -53,13 +65,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onDestroy() {
+        // disconnect the socket
         socket.disconnect()
+        // Unregister broadcast
         LocalBroadcastManager.getInstance(this).unregisterReceiver(userDataChangeReceiver)
         super.onDestroy()
     }
 
     private val userDataChangeReceiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context?, intent: Intent?) {
+        override fun onReceive(context: Context, intent: Intent?) {
             if (AuthService.isLoggedIn){
                 userNameNavHeader.text = UserDataService.name
                 userEmailNavHeader.text = UserDataService.email
@@ -68,6 +82,12 @@ class MainActivity : AppCompatActivity() {
                 // Changing the background color to the one which was picked by user
                 userImgNavHeader.setBackgroundColor(UserDataService.returnAvatarColor(UserDataService.avatarColor))
                 loginBtnNavHeader.text = "Logout"
+
+                MessageService.getChannels(context) { complete ->
+                    if (complete){
+                        channelAdapter.notifyDataSetChanged()
+                    }
+                }
             }
         }
     }
@@ -98,7 +118,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun addChannelBtnClicked(view: View) {
-
         if (AuthService.isLoggedIn) {
             val builder = AlertDialog.Builder(this)
             val dialogView = layoutInflater.inflate(R.layout.add_channel_dialog, null)
@@ -108,11 +127,14 @@ class MainActivity : AppCompatActivity() {
                         // perform some logic when clicked
                         val nameTextField = dialogView.findViewById<TextView>(R.id.addChannelNameTxt)
                         val descTextField = dialogView.findViewById<TextView>(R.id.addChannelDescTxt)
+
+                        // channelName needs to create an emit for socket channel
                         val channelName = nameTextField.text.toString()
+                        // channelDesc needs to create an emit for socket channel
                         val channelDesc = descTextField.text.toString()
 
                         // Create a channel with the channel name and description
-                        // emit() method sending info from out client to API
+                        // Socektio - emit() method sending info from out client to API
                         socket.emit("newChannel", channelName, channelDesc)
                     }
                     .setNegativeButton("Cancel") { dialogInterface, i ->
@@ -122,17 +144,22 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    // Listens for emit and store data to Channel class. Saves it to Data base and output to Log if created
     private val onNewChannel = Emitter.Listener { args ->
+        // args is an Array of type Any so we need to cast it String
         runOnUiThread {
+            // Back from main thread to UiThread and update out listView
             val channelName = args[0] as String
             val channelDescription = args[1] as String
             val channelId = args[2] as String
 
+            // Create new instance for our new channel
             val newChannel = Channel(channelName, channelDescription, channelId)
+            // Then store new channel instance to an Array of channels
             MessageService.channels.add(newChannel)
+
+            channelAdapter.notifyDataSetChanged() // Immediately updates when channel is created
         }
-
-
     }
 
     fun sendMessageBtnClicked(view: View) {
