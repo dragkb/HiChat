@@ -16,6 +16,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import com.alex.hichat.Model.Channel
+import com.alex.hichat.Model.Message
 import com.alex.hichat.R
 import com.alex.hichat.Services.AuthService
 import com.alex.hichat.Services.MessageService
@@ -53,6 +54,8 @@ class MainActivity : AppCompatActivity() {
         // save it to Data base and output to Log if created
         // Socketio - Send out(emit) message from API to those connected in the room
         socket.on("channelCreated", onNewChannel)
+        // For message listening
+        socket.on("messageCreated", onNewMessage)
 
         val toggle = ActionBarDrawerToggle(
                 this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
@@ -184,15 +187,42 @@ class MainActivity : AppCompatActivity() {
 
             // Create new instance for our new channel
             val newChannel = Channel(channelName, channelDescription, channelId)
-            // Then store new channel instance to an Array of channels
+            // Then store new channel instance to an ArrayList of channels
             MessageService.channels.add(newChannel)
 
             channelAdapter.notifyDataSetChanged() // Immediately updates when channel is created
         }
     }
 
+    // Listens for emit to API.
+    private val onNewMessage = Emitter.Listener { args ->
+        runOnUiThread {
+            val msgBody = args[0] as String
+//            val msgId = args[1] as String // We skipped this because it's never used in the code
+            val channelId = args[2] as String
+            val userName = args[3] as String
+            val userAvatar = args[4] as String
+            val userAvatarColor = args[5] as String
+            val id = args[6] as String
+            val timeStamp = args[7] as String
+
+            val newMessage = Message(msgBody, userName, channelId, userAvatar, userAvatarColor, id, timeStamp)
+            // Storing message to an ArrayList
+            MessageService.messages.add(newMessage)
+            println(newMessage.message)
+        }
+
+    }
+
     fun sendMessageBtnClicked(view: View) {
-        hideKeyboard()
+        if(App.sharedPrefs.isLoggedIn && messageTxtField.text.isNotEmpty() && selectedChannel != null) {
+            val userId = UserDataService.id
+            val channelId = selectedChannel!!.id
+            socket.emit("newMessage", messageTxtField.text.toString(), userId, channelId,
+                    UserDataService.name, UserDataService.avatarName, UserDataService.avatarColor)
+            messageTxtField.text.clear()
+            hideKeyboard()
+        }
     }
 
     // Hiding soft keyboard

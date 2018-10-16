@@ -3,6 +3,7 @@ package com.alex.hichat.Services
 import android.util.Log
 import com.alex.hichat.Controller.App
 import com.alex.hichat.Model.Channel
+import com.alex.hichat.Model.Message
 import com.alex.hichat.Utilities.GET_URL_CHANNELS
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonArrayRequest
@@ -10,7 +11,10 @@ import org.json.JSONException
 
 object MessageService {
 
+    // ArrayList for channels
     val channels = ArrayList<Channel>()
+    // ArrayList for messages
+    val messages = ArrayList<Message>()
 
     // JSON request for find all channels
     fun getChannels(complete: (Boolean) -> Unit) {
