@@ -2,11 +2,11 @@ package com.alex.hichat.Services
 
 import android.content.Context
 import android.util.Log
+import com.alex.hichat.Controller.App
 import com.alex.hichat.Model.Channel
 import com.alex.hichat.Utilities.GET_URL_CHANNELS
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonArrayRequest
-import com.android.volley.toolbox.Volley
 import org.json.JSONException
 
 object MessageService {
@@ -44,10 +44,10 @@ object MessageService {
 
             override fun getHeaders(): MutableMap<String, String> {
                 val headers = HashMap<String, String>()
-                headers.put("Authorization", "Bearer ${AuthService.authToken}")
+                headers.put("Authorization", "Bearer ${App.sharedPrefs.authToken}")
                 return headers
             }
         }
-        Volley.newRequestQueue(context).add(channelsRequest)
+        App.sharedPrefs.requestQueue.add(channelsRequest)
     }
 }

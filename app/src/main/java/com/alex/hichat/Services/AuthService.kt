@@ -4,19 +4,15 @@ import android.content.Context
 import android.content.Intent
 import android.support.v4.content.LocalBroadcastManager
 import android.util.Log
+import com.alex.hichat.Controller.App
 import com.alex.hichat.Utilities.*
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.StringRequest
-import com.android.volley.toolbox.Volley
 import org.json.JSONException
 import org.json.JSONObject
 
 object AuthService {
-
-    var isLoggedIn = false
-    var userEmail = ""
-    var authToken = ""
 
     // For volley API we need context, and the body(check Postman body) of our request and
     // completion handler to understand if our request finished successfully or not
@@ -50,7 +46,7 @@ object AuthService {
         }
 
         // Add created request to Volley request Queue
-        Volley.newRequestQueue(context).add(registerRequest)
+        App.sharedPrefs.requestQueue.add(registerRequest)
     }
 
     fun loginUser(context: Context, email: String, password: String, complete: (Boolean) -> Unit) {
@@ -64,9 +60,9 @@ object AuthService {
             // This is where we parse the String
             // getString throws JSONException, so we need try catch
             try {
-                userEmail = response.getString("user")  // Parse user's email and assigns it to userEmail instance variable
-                authToken = response.getString("token") // Parse Json token and assign it to instance variable authToken
-                isLoggedIn = true                             // isLoggedIn = true because we logged in
+                App.sharedPrefs.userEmail = response.getString("user")  // Parse user's email and assigns it to userEmail instance variable
+                App.sharedPrefs.authToken = response.getString("token") // Parse Json token and assign it to instance variable authToken
+                App.sharedPrefs.isLoggedIn = true                             // isLoggedIn = true because we logged in
                 complete(true)
             } catch (e: JSONException) {
                 Log.d("JSON", "EXC: " + e.localizedMessage) // Show the exception in debug logcat if fails
@@ -87,7 +83,7 @@ object AuthService {
             }
         }
 
-        Volley.newRequestQueue(context).add(loginRequest)
+        App.sharedPrefs.requestQueue.add(loginRequest)
     }
 
     fun createUser(context: Context, name: String, email: String, avatarName: String, avatarColor: String, complete: (Boolean) -> Unit) {
@@ -130,18 +126,18 @@ object AuthService {
 
             override fun getHeaders(): MutableMap<String, String> {
                 val headers = HashMap<String, String>()
-                headers.put("Authorization", "Bearer $authToken")
+                headers.put("Authorization", "Bearer ${App.sharedPrefs.authToken}")
                 return headers
             }
         }
 
-        Volley.newRequestQueue(context).add(createRequest)
+        App.sharedPrefs.requestQueue.add(createRequest)
     }
 
     // Don't need the body since its only Get request
     fun findUserByEmail(context: Context, complete: (Boolean) -> Unit) {
 
-        val findRequest = object : JsonObjectRequest(Method.GET, "$URL_FIND_USER_BY_EMAIL$userEmail", null, Response.Listener { response ->
+        val findRequest = object : JsonObjectRequest(Method.GET, "$URL_FIND_USER_BY_EMAIL${App.sharedPrefs.userEmail}", null, Response.Listener { response ->
 
             try {
                 UserDataService.name = response.getString("name")
@@ -170,11 +166,11 @@ object AuthService {
 
             override fun getHeaders(): MutableMap<String, String> {
                 val headers = HashMap<String, String>()
-                headers.put("Authorization", "Bearer $authToken")
+                headers.put("Authorization", "Bearer ${App.sharedPrefs.authToken}")
                 return headers
             }
         }
 
-        Volley.newRequestQueue(context).add(findRequest)
+        App.sharedPrefs.requestQueue.add(findRequest)
     }
 }
