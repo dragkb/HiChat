@@ -21,8 +21,11 @@ const val URL_FIND_USER_BY_EMAIL = "${BASE_URL}user/byEmail/"
 // Socket URL
 const val SOCKET_URL = "https://hismackchat.herokuapp.com/"
 
+// Url for find all channels
+const val URL_GET_CHANNELS = "${BASE_URL}channel"
+
+//Url for getting messages
+const val URL_GET_MESSAGES = "${BASE_URL}message/byChannel/"
+
 // Broadcast const to say another activity that something changed
 const val BROADCAST_USER_DATA_CHANGE = "BROADCAST_USER_DATA_CHANGE"
-
-// Url fro find all channels
-const val GET_URL_CHANNELS = "${BASE_URL}channel"

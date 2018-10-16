@@ -12,7 +12,7 @@ object UserDataService {
     var email = ""
     var name = ""
 
-    fun logout(){
+    fun logout() {
         id = ""
         avatarColor = ""
         avatarName = ""
@@ -21,9 +21,12 @@ object UserDataService {
         App.sharedPrefs.authToken = ""
         App.sharedPrefs.userEmail = ""
         App.sharedPrefs.isLoggedIn = false
+        // When we are logout clear messages and channels
+        MessageService.clearMessages()
+        MessageService.clearChannels()
     }
 
-    fun returnAvatarColor(components: String) : Int {
+    fun returnAvatarColor(components: String): Int {
         val strippedColor = components
                 .replace("[", "")
                 .replace("]", "")
@@ -32,11 +35,11 @@ object UserDataService {
         var g = 0
         var b = 0
         val scanner = Scanner(strippedColor)
-        if (scanner.hasNext()){
+        if (scanner.hasNext()) {
             r = (scanner.nextDouble() * 255).toInt()
             g = (scanner.nextDouble() * 255).toInt()
             b = (scanner.nextDouble() * 255).toInt()
         }
-        return Color.rgb(r,g,b)
+        return Color.rgb(r, g, b)
     }
 }

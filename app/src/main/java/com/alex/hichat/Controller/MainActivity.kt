@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var channelAdapter: ArrayAdapter<Channel>
     // This var is used if we're not logged in then we don't have any selected channels, that's why = null
     // We need this for handling downloaded messages for one channel only, not the for all channels
-    var selectedChannel: Channel?= null
+    var selectedChannel: Channel? = null
 
     private fun setupAdapters() {
         channelAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, MessageService.channels)
@@ -73,7 +73,7 @@ class MainActivity : AppCompatActivity() {
 
         // Saving logging state if Logged in
         if (App.sharedPrefs.isLoggedIn) {
-            AuthService.findUserByEmail(this){}
+            AuthService.findUserByEmail(this) {}
         }
     }
 
@@ -93,7 +93,7 @@ class MainActivity : AppCompatActivity() {
 
     private val userDataChangeReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent?) {
-            if (App.sharedPrefs.isLoggedIn){
+            if (App.sharedPrefs.isLoggedIn) {
                 userNameNavHeader.text = UserDataService.name
                 userEmailNavHeader.text = UserDataService.email
                 val resourceId = resources.getIdentifier(UserDataService.avatarName, "drawable", packageName)
@@ -104,9 +104,9 @@ class MainActivity : AppCompatActivity() {
 
                 // Downloading channels here
                 MessageService.getChannels { complete ->
-                    if (complete){
+                    if (complete) {
                         // If we have selected channel then assign it to selectedChannel
-                        if(MessageService.channels.count() > 0){
+                        if (MessageService.channels.count() > 0) {
                             selectedChannel = MessageService.channels[0]
                             // If no channels no reason to notify that data changed
                             channelAdapter.notifyDataSetChanged()
@@ -122,6 +122,15 @@ class MainActivity : AppCompatActivity() {
     fun updateWithChannel() {
         mainChannelName.text = "#${selectedChannel?.name}"
         // Download messages for channel
+        if(selectedChannel != null) {
+            MessageService.getMessages(selectedChannel!!.id) { complete ->
+                if(complete) {
+                    for (message in MessageService.messages) {
+                        println(message.message)
+                    }
+                }
+            }
+        }
     }
 
     override fun onBackPressed() {
@@ -134,7 +143,7 @@ class MainActivity : AppCompatActivity() {
 
     fun loginBtnNavClicked(view: View) {
         // if login then we need to see logout and moved to activity after logout
-        if (App.sharedPrefs.isLoggedIn){
+        if (App.sharedPrefs.isLoggedIn) {
             UserDataService.logout()
             userNameNavHeader.text = ""
             userEmailNavHeader.text = ""
@@ -178,44 +187,48 @@ class MainActivity : AppCompatActivity() {
 
     // Listens for emit and store data to Channel class. Saves it to Data base and output to Log if created
     private val onNewChannel = Emitter.Listener { args ->
-        // args is an Array of type Any so we need to cast it String
-        runOnUiThread {
-            // Back from main thread to UiThread and update out listView
-            val channelName = args[0] as String
-            val channelDescription = args[1] as String
-            val channelId = args[2] as String
+        if(App.sharedPrefs.isLoggedIn) {
+            runOnUiThread {
+                // Back from main thread to UiThread and update out listView
+                val channelName = args[0] as String
+                // args is an Array of type Any so we need to cast it String
+                val channelDescription = args[1] as String
+                val channelId = args[2] as String
 
-            // Create new instance for our new channel
-            val newChannel = Channel(channelName, channelDescription, channelId)
-            // Then store new channel instance to an ArrayList of channels
-            MessageService.channels.add(newChannel)
+                // Create new instance for our new channel
+                val newChannel = Channel(channelName, channelDescription, channelId)
+                // Then store new channel instance to an ArrayList of channels
+                MessageService.channels.add(newChannel)
 
-            channelAdapter.notifyDataSetChanged() // Immediately updates when channel is created
+                channelAdapter.notifyDataSetChanged() // Immediately updates when channel is created
+            }
         }
     }
 
     // Listens for emit to API.
     private val onNewMessage = Emitter.Listener { args ->
-        runOnUiThread {
-            val msgBody = args[0] as String
-//            val msgId = args[1] as String // We skipped this because it's never used in the code
-            val channelId = args[2] as String
-            val userName = args[3] as String
-            val userAvatar = args[4] as String
-            val userAvatarColor = args[5] as String
-            val id = args[6] as String
-            val timeStamp = args[7] as String
+        if(App.sharedPrefs.isLoggedIn) {
+            runOnUiThread {
+                val channelId = args[2] as String
+                if (channelId == selectedChannel?.id) {
+                    val msgBody = args[0] as String
+                    // val msgId = args[1] as String // We skipped this because it's never used in the code
+                    val userName = args[3] as String
+                    val userAvatar = args[4] as String
+                    val userAvatarColor = args[5] as String
+                    val id = args[6] as String
+                    val timeStamp = args[7] as String
 
-            val newMessage = Message(msgBody, userName, channelId, userAvatar, userAvatarColor, id, timeStamp)
-            // Storing message to an ArrayList
-            MessageService.messages.add(newMessage)
-            println(newMessage.message)
+                    val newMessage = Message(msgBody, userName, channelId, userAvatar, userAvatarColor, id, timeStamp)
+                    // Storing message to an ArrayList
+                    MessageService.messages.add(newMessage)
+                }
+            }
         }
-
     }
 
     fun sendMessageBtnClicked(view: View) {
-        if(App.sharedPrefs.isLoggedIn && messageTxtField.text.isNotEmpty() && selectedChannel != null) {
+        if (App.sharedPrefs.isLoggedIn && messageTxtField.text.isNotEmpty() && selectedChannel != null) {
             val userId = UserDataService.id
             val channelId = selectedChannel!!.id
             socket.emit("newMessage", messageTxtField.text.toString(), userId, channelId,

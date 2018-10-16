@@ -3,7 +3,7 @@ package com.alex.hichat.Controller
 import android.app.Application
 import com.alex.hichat.Utilities.SharedPrefs
 
-class App: Application() {
+class App : Application() {
 
     // Like a singleton but only for this class
     companion object {

@@ -76,7 +76,7 @@ class CreateUserActivity : AppCompatActivity() {
         val password = createPasswordTxt.text.toString()
 
         // Fields validation
-        if(userName.isNotEmpty() && email.isNotEmpty() && password.isNotEmpty()) {
+        if (userName.isNotEmpty() && email.isNotEmpty() && password.isNotEmpty()) {
             AuthService.registerUser(email, password) { registerSuccess ->
                 if (registerSuccess) {
                     AuthService.loginUser(email, password) { loginSuccess ->
@@ -93,7 +93,7 @@ class CreateUserActivity : AppCompatActivity() {
                                     errorToast()
                                 }
                             }
-                        } else{
+                        } else {
                             errorToast()
                         }
                     }
@@ -106,15 +106,15 @@ class CreateUserActivity : AppCompatActivity() {
             Toast.makeText(this, "Make sure user name, email and password are filled in", Toast.LENGTH_SHORT).show()
             enableSpinner(false)
         }
-
     }
+
     // Error message to users
-    fun errorToast(){
+    fun errorToast() {
         Toast.makeText(this, "Something went wrong, please try again", Toast.LENGTH_LONG).show()
     }
 
     // This function makes the spinner either visible or not and set other buttons to disable or enabled mode when createUserBtn clicked
-    fun enableSpinner(enable: Boolean){
+    fun enableSpinner(enable: Boolean) {
         if (enable) {
             createSpinner.visibility = View.VISIBLE
         } else {
