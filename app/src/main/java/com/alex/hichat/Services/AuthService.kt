@@ -16,7 +16,7 @@ object AuthService {
 
     // For volley API we need context, and the body(check Postman body) of our request and
     // completion handler to understand if our request finished successfully or not
-    fun registerUser(context: Context, email: String, password: String, complete: (Boolean) -> Unit) {
+    fun registerUser(email: String, password: String, complete: (Boolean) -> Unit) {
 
         // Json object that we are passing
         val jsonBody = JSONObject()
@@ -49,7 +49,7 @@ object AuthService {
         App.sharedPrefs.requestQueue.add(registerRequest)
     }
 
-    fun loginUser(context: Context, email: String, password: String, complete: (Boolean) -> Unit) {
+    fun loginUser(email: String, password: String, complete: (Boolean) -> Unit) {
 
         val jsonBody = JSONObject()
         jsonBody.put("email", email)
@@ -86,7 +86,7 @@ object AuthService {
         App.sharedPrefs.requestQueue.add(loginRequest)
     }
 
-    fun createUser(context: Context, name: String, email: String, avatarName: String, avatarColor: String, complete: (Boolean) -> Unit) {
+    fun createUser(name: String, email: String, avatarName: String, avatarColor: String, complete: (Boolean) -> Unit) {
 
         // All parameters are referred to the Postman request body
         val jsonBody = JSONObject()

@@ -1,6 +1,5 @@
 package com.alex.hichat.Services
 
-import android.content.Context
 import android.util.Log
 import com.alex.hichat.Controller.App
 import com.alex.hichat.Model.Channel
@@ -14,7 +13,7 @@ object MessageService {
     val channels = ArrayList<Channel>()
 
     // JSON request for find all channels
-    fun getChannels(context: Context, complete: (Boolean) -> Unit) {
+    fun getChannels(complete: (Boolean) -> Unit) {
         val channelsRequest = object  : JsonArrayRequest(Method.GET, GET_URL_CHANNELS, null, Response.Listener { response ->
             // Looping through array of JSON objects to get all channels available
             try {

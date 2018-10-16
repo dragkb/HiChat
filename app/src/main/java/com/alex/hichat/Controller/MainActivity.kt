@@ -26,6 +26,7 @@ import io.socket.client.IO
 import io.socket.emitter.Emitter
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
+import kotlinx.android.synthetic.main.content_main.*
 import kotlinx.android.synthetic.main.nav_header_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -33,6 +34,9 @@ class MainActivity : AppCompatActivity() {
     // Declaring socket URL. When user connected you can track the connection on heroku API server: "a user connected".
     val socket = IO.socket(SOCKET_URL)
     lateinit var channelAdapter: ArrayAdapter<Channel>
+    // This var is used if we're not logged in then we don't have any selected channels, that's why = null
+    // We need this for handling downloaded messages for one channel only, not the for all channels
+    var selectedChannel: Channel?= null
 
     private fun setupAdapters() {
         channelAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, MessageService.channels)
@@ -57,6 +61,14 @@ class MainActivity : AppCompatActivity() {
 
         setupAdapters()
 
+        // Updates UI for channel name if clicked on the channel #name
+        channel_list.setOnItemClickListener { _, _, i, _ ->
+            selectedChannel = MessageService.channels[i]
+            drawer_layout.closeDrawer(GravityCompat.START)
+            updateWithChannel()
+        }
+
+        // Saving logging state if Logged in
         if (App.sharedPrefs.isLoggedIn) {
             AuthService.findUserByEmail(this){}
         }
@@ -87,13 +99,26 @@ class MainActivity : AppCompatActivity() {
                 userImgNavHeader.setBackgroundColor(UserDataService.returnAvatarColor(UserDataService.avatarColor))
                 loginBtnNavHeader.text = "Logout"
 
-                MessageService.getChannels(context) { complete ->
+                // Downloading channels here
+                MessageService.getChannels { complete ->
                     if (complete){
-                        channelAdapter.notifyDataSetChanged()
+                        // If we have selected channel then assign it to selectedChannel
+                        if(MessageService.channels.count() > 0){
+                            selectedChannel = MessageService.channels[0]
+                            // If no channels no reason to notify that data changed
+                            channelAdapter.notifyDataSetChanged()
+                            updateWithChannel()
+                        }
                     }
                 }
             }
         }
+    }
+
+    // Update UI(mainChannelName) element with particular channel
+    fun updateWithChannel() {
+        mainChannelName.text = "#${selectedChannel?.name}"
+        // Download messages for channel
     }
 
     override fun onBackPressed() {
@@ -127,7 +152,7 @@ class MainActivity : AppCompatActivity() {
             val dialogView = layoutInflater.inflate(R.layout.add_channel_dialog, null)
 
             builder.setView(dialogView)
-                    .setPositiveButton("Add") { dialogInterface, i ->
+                    .setPositiveButton("Add") { _, _ ->
                         // perform some logic when clicked
                         val nameTextField = dialogView.findViewById<TextView>(R.id.addChannelNameTxt)
                         val descTextField = dialogView.findViewById<TextView>(R.id.addChannelDescTxt)
@@ -141,7 +166,7 @@ class MainActivity : AppCompatActivity() {
                         // Socektio - emit() method sending info from out client to API
                         socket.emit("newChannel", channelName, channelDesc)
                     }
-                    .setNegativeButton("Cancel") { dialogInterface, i ->
+                    .setNegativeButton("Cancel") { _, _ ->
                         // Cancel and close the dialog
                     }
                     .show()
