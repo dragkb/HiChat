@@ -71,6 +71,8 @@ class MainActivity : AppCompatActivity() {
         toggle.syncState()
 
         setupAdapters()
+        LocalBroadcastManager.getInstance(this).registerReceiver(userDataChangeReceiver,
+                IntentFilter(BROADCAST_USER_DATA_CHANGE))
 
         // Updates UI for channel name if clicked on the channel #name
         channel_list.setOnItemClickListener { _, _, i, _ ->
@@ -83,12 +85,6 @@ class MainActivity : AppCompatActivity() {
         if (App.sharedPrefs.isLoggedIn) {
             AuthService.findUserByEmail(this) {}
         }
-    }
-
-    override fun onResume() {
-        LocalBroadcastManager.getInstance(this).registerReceiver(userDataChangeReceiver,
-                IntentFilter(BROADCAST_USER_DATA_CHANGE))
-        super.onResume()
     }
 
     override fun onDestroy() {
@@ -164,6 +160,7 @@ class MainActivity : AppCompatActivity() {
             userImgNavHeader.setImageResource(R.drawable.profiledefault)
             userImgNavHeader.setBackgroundColor(Color.TRANSPARENT)
             loginBtnNavHeader.text = "Login"
+            mainChannelName.text = "Please log in"
         } else {
             // if we are not logged in yet then we need to click on login and moved to activity after logged in
             val loginActivityIntent = Intent(this, LoginActivity::class.java)
