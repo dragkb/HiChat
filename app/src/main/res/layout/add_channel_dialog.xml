@@ -27,9 +27,9 @@
         android:layout_marginBottom="18dp"
         android:ems="10"
         android:fontFamily="@font/montserrat"
-        android:hint="channel name"
+        android:hint="Сhannel name"
         android:inputType="textPersonName"
-        android:textColor="@android:color/darker_gray" />
+        android:textColor="@android:color/black" />
 
     <EditText
         android:id="@+id/addChannelDescTxt"
@@ -40,8 +40,7 @@
         android:layout_marginBottom="18dp"
         android:ems="10"
         android:fontFamily="@font/montserrat"
-        android:hint="channel description"
+        android:hint="Сhannel description"
         android:inputType="textPersonName"
-        android:textColor="@android:color/darker_gray"
-        tools:text="channel description" />
+        android:textColor="@android:color/black" />
 </LinearLayout>
