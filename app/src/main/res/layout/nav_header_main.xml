@@ -27,8 +27,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:fontFamily="@font/montserrat"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/userImgNavHeader"
         app:layout_constraintTop_toTopOf="@+id/userImgNavHeader"
         tools:text="AlexK" />
@@ -38,6 +40,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:fontFamily="@font/montserrat"
+        android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/userImgNavHeader"
         app:layout_constraintTop_toBottomOf="@+id/userNameNavHeader"
         tools:text="alex@abc.com" />
@@ -49,6 +53,7 @@
         android:layout_marginStart="4dp"
         android:layout_marginBottom="8dp"
         android:background="@android:color/transparent"
+        android:fontFamily="@font/montserrat_bold"
         android:onClick="loginBtnNavClicked"
         android:text="LOGIN"
         app:layout_constraintBottom_toBottomOf="parent"

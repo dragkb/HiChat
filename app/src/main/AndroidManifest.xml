@@ -26,6 +26,10 @@
         </activity>
         <activity android:name=".Controller.LoginActivity" />
         <activity android:name=".Controller.CreateUserActivity"></activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>
