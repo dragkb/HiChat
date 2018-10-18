@@ -16,12 +16,13 @@
         android:layout_marginEnd="32dp"
         android:ems="10"
         android:fontFamily="@font/montserrat"
-        android:hint="user name"
+        android:hint="@string/user_name"
         android:inputType="textPersonName"
         android:textColor="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="Autofill" />
 
     <EditText
         android:id="@+id/createPasswordTxt"
@@ -32,13 +33,14 @@
         android:layout_marginEnd="32dp"
         android:ems="10"
         android:fontFamily="@font/montserrat"
-        android:hint="password"
+        android:hint="@string/password"
         android:inputType="textPassword"
         android:textColor="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/createEmailTxt" />
+        app:layout_constraintTop_toBottomOf="@+id/createEmailTxt"
+        tools:ignore="Autofill"/>
 
     <EditText
         android:id="@+id/createEmailTxt"
@@ -49,13 +51,14 @@
         android:layout_marginEnd="32dp"
         android:ems="10"
         android:fontFamily="@font/montserrat"
-        android:hint="email"
+        android:hint="@string/create_email_hint"
         android:inputType="textPersonName"
         android:textColor="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/createUserNameTxt" />
+        app:layout_constraintTop_toBottomOf="@+id/createUserNameTxt"
+        tools:ignore="Autofill,TextFields" />
 
     <TextView
         android:id="@+id/textView2"
@@ -63,7 +66,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:fontFamily="@font/montserrat"
-        android:text="Tap to generate user avatar"
+        android:text="@string/tap_to_generate_user_avatar"
         android:textColor="@android:color/black"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -80,7 +83,8 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2"
-        app:srcCompat="@drawable/profiledefault" />
+        app:srcCompat="@drawable/profiledefault"
+        android:contentDescription="@string/create_avatar_image_button" />
 
     <Button
         android:id="@+id/backgroundColorBtn"
@@ -92,7 +96,7 @@
         android:background="@color/colorPrimary"
         android:fontFamily="@font/montserrat_bold"
         android:onClick="generateColorClicked"
-        android:text="generate background color"
+        android:text="@string/generate_background_color"
         android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -108,7 +112,7 @@
         android:background="@color/colorPrimary"
         android:fontFamily="@font/montserrat_bold"
         android:onClick="createUserBtnClicked"
-        android:text="Create user"
+        android:text="@string/create_user"
         android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

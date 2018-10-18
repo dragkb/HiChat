@@ -55,7 +55,7 @@
         android:background="@android:color/transparent"
         android:fontFamily="@font/montserrat_bold"
         android:onClick="loginBtnNavClicked"
-        android:text="LOGIN"
+        android:text="@string/login_nav_main_header"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -71,6 +71,7 @@
         android:scaleType="fitXY"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/addchannelbutton" />
+        app:srcCompat="@drawable/addchannelbutton"
+        android:contentDescription="@string/user_login_image" />
 
 </android.support.constraint.ConstraintLayout>
