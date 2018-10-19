@@ -55,7 +55,7 @@
         android:id="@+id/messageListView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@drawable/abstraction"
+        android:background="@drawable/white_abstraction"
         android:scrollbars="vertical"
         app:layout_constraintBottom_toTopOf="@+id/messageTxtField"
         app:layout_constraintEnd_toEndOf="parent"

@@ -34,8 +34,8 @@
                 android:layout_below="@id/nav_drawer_header_include"
                 android:layout_alignParentStart="true"
                 android:layout_marginTop="-3dp"
-                android:background="@drawable/whitebricks"
-                android:textFilterEnabled="false"></ListView>
+                android:background="@drawable/chat_wallpaper"
+                android:textFilterEnabled="false" />
             
         </RelativeLayout>
 
