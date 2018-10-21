@@ -1,6 +1,5 @@
 package com.alex.hichat.Controller
 
-import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.support.v7.app.AppCompatActivity
@@ -10,7 +9,6 @@ import android.view.View
 import android.widget.Toast
 import com.alex.hichat.R
 import com.alex.hichat.Services.AuthService
-import com.alex.hichat.Services.UserDataService
 import com.alex.hichat.Utilities.BROADCAST_USER_DATA_CHANGE
 import kotlinx.android.synthetic.main.activity_create_user.*
 import java.util.*
@@ -91,26 +89,29 @@ class CreateUserActivity : AppCompatActivity() {
                                     finish() // For dismiss activity use method finish()
                                 } else {
                                     errorToast()
+                                    enableSpinner(false)
                                 }
                             }
                         } else {
                             errorToast()
+                            enableSpinner(false)
                         }
                     }
                 } else {
                     errorToast()
+                    enableSpinner(false)
                 }
             }
         } else {
             // Error message if fields are not filled in completely
-            Toast.makeText(this, "Make sure user name, email and password are filled in", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, R.string.toast_create_user_empty_fields_passed, Toast.LENGTH_SHORT).show()
             enableSpinner(false)
         }
     }
 
     // Error message to users
     fun errorToast() {
-        Toast.makeText(this, "Something went wrong, please try again", Toast.LENGTH_LONG).show()
+        Toast.makeText(this, R.string.toast_something_went_wrong_message, Toast.LENGTH_LONG).show()
     }
 
     // This function makes the spinner either visible or not and set other buttons to disable or enabled mode when createUserBtn clicked

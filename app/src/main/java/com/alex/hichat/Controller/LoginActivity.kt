@@ -34,14 +34,17 @@ class LoginActivity : AppCompatActivity() {
                             finish()
                         } else {
                             errorToast()
+                            enableSpinner(false)
                         }
                     }
                 } else {
                     errorToast()
+                    enableSpinner(false)
                 }
             }
         } else {
-            Toast.makeText(this, "Please fill in both email and password", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, R.string.toast_fill_both_email_password_fields, Toast.LENGTH_LONG).show()
+            enableSpinner(false)
         }
     }
 
@@ -54,7 +57,7 @@ class LoginActivity : AppCompatActivity() {
 
     // Error message to users
     fun errorToast() {
-        Toast.makeText(this, "Something went wrong, please try again", Toast.LENGTH_LONG).show()
+        Toast.makeText(this, R.string.toast_something_went_wrong_message, Toast.LENGTH_LONG).show()
     }
 
     // This function makes the spinner either visible or not and set other buttons to disable or enabled mode when createUserBtn clicked
@@ -73,7 +76,7 @@ class LoginActivity : AppCompatActivity() {
     fun hideKeyboard() {
         val inputManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         if (inputManager.isAcceptingText) {
-            inputManager.hideSoftInputFromWindow(currentFocus.windowToken, 0)
+            inputManager.hideSoftInputFromWindow(currentFocus?.windowToken, 0)
         }
     }
 }

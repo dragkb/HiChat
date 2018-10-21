@@ -26,4 +26,7 @@
     <string name="login_nav_main_header">LOGIN</string>
     <string name="user_login_image">user login image</string>
     <string name="create_email_hint">email</string>
+    <string name="toast_something_went_wrong_message">Something went wrong, please try again</string>
+    <string name="toast_fill_both_email_password_fields">Please fill in both email and password</string>
+    <string name="toast_create_user_empty_fields_passed">Make sure user name, email and password are filled in</string>
 </resources>
