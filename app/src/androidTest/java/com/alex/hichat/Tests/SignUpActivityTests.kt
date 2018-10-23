@@ -6,14 +6,11 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import android.support.test.espresso.Espresso
-import android.support.test.espresso.Espresso.onView
-import android.support.test.espresso.action.ViewActions.*
-import android.support.test.espresso.assertion.ViewAssertions.matches
-import android.support.test.espresso.matcher.RootMatchers.withDecorView
-import android.support.test.espresso.matcher.ViewMatchers.*
 import com.alex.hichat.Controller.MainActivity
-import com.alex.hichat.R
-import org.hamcrest.CoreMatchers.*
+import com.alex.hichat.Screens.LoginScreen
+import com.alex.hichat.Screens.MainScreen
+import com.alex.hichat.Screens.SignUpScreen
+import com.alex.hichat.Utilities.ToastPopUps
 import java.lang.Thread.sleep
 
 @RunWith(AndroidJUnit4::class)
@@ -22,154 +19,96 @@ class SignUpActivityTests {
     @get:Rule
     var myActivityTestRule = ActivityTestRule(MainActivity::class.java)
 
-    private var randomPassGen = Math.random()
+    private var randomPassword = Math.random().toFloat()
     private val newUserName = "zorro"
-    private var newUserEmailGen = "zorro$randomPassGen@gmail.com"
+    private var newUserEmail = "zorro$randomPassword@gmail.com"
     private val newUserPassword = "123456"
+
+    private val mainScreen = MainScreen()
+    private val loginScreen = LoginScreen()
+    private val signUpScreen = SignUpScreen()
+    private val toastPopUps = ToastPopUps()
 
     @Test
     fun createNewUserTest() {
-        onView(withId(R.id.mainChannelName))
-                .check(matches(isDisplayed()))
-        onView(withContentDescription("Open navigation drawer"))
-                .perform(click())
-        onView(withId(R.id.loginBtnNavHeader))
-                .perform(click())
-        onView(withId(R.id.loginCreateUserBtn))
-                .perform(click())
-        onView(withId(R.id.createUserNameTxt))
-                .perform(typeText(newUserName))
-        onView(withId(R.id.createEmailTxt))
-                .perform(typeText(newUserEmailGen))
-        onView(withId(R.id.createPasswordTxt))
-                .perform(typeText(newUserPassword))
+        mainScreen.clickOnHamburgerBtnMain()
+                .clickOnLoginHeaderBtn()
+        loginScreen.clickOnSignUpHereBtn()
+        signUpScreen.typeNewName(newUserName)
+                .typeNewEmail(newUserEmail)
+                .typeNewPassword(newUserPassword)
         Espresso.closeSoftKeyboard()
-        onView(withId(R.id.createAvatarImgView))
-                .perform(click(), click())
-        onView(withId(R.id.backgroundColorBtn))
-                .perform(click(), click(), click())
-        onView(withId(R.id.createUserBtn))
-                .perform(click())
+        signUpScreen.generateNewAvatar(3)
+                .generateBackgroundColor(3)
+                .clickOnCreateUserBtn()
         sleep(6000)
-        onView(withText(newUserEmailGen))
-                .check(matches(isDisplayed()))
-        onView(withId(R.id.loginBtnNavHeader))
-                .perform(click())
+        loginScreen.assertUserEmailTest(newUserEmail)
+        mainScreen.clickOnLoginHeaderBtn()
     }
 
     @Test
     fun emptyCreateUserBtnEmptyFieldsToastMessageTest() {
-        onView(withId(R.id.mainChannelName))
-                .check(matches(isDisplayed()))
-        onView(withContentDescription("Open navigation drawer"))
-                .perform(click())
-        onView(withId(R.id.loginBtnNavHeader))
-                .perform(click())
-        onView(withId(R.id.loginCreateUserBtn))
-                .perform(click())
-        onView(withId(R.id.createUserBtn))
-                .perform(click())
+        mainScreen.clickOnHamburgerBtnMain()
+                .clickOnLoginHeaderBtn()
+        loginScreen.clickOnSignUpHereBtn()
+        signUpScreen.clickOnCreateUserBtn()
         sleep(700)
-        onView(withText(R.string.toast_create_user_empty_fields_passed))
-                .inRoot(withDecorView(not(`is`(myActivityTestRule.activity.window.decorView))))
-                .check(matches(isDisplayed()))
+        toastPopUps.assertToastSignUpAllFieldsFilledIn(myActivityTestRule)
     }
 
     @Test
-    fun userNameTxtFieldPresent() {
-        onView(withId(R.id.mainChannelName))
-                .check(matches(isDisplayed()))
-        onView(withContentDescription("Open navigation drawer"))
-                .perform(click())
-        onView(withId(R.id.loginBtnNavHeader))
-                .perform(click())
-        onView(withId(R.id.loginCreateUserBtn))
-                .perform(click())
-        onView(withId(R.id.createUserNameTxt))
-                .check(matches(allOf(withHint("user name"), isDisplayed())))
+    fun userNameTxtFieldHintPresent() {
+        mainScreen.clickOnHamburgerBtnMain()
+                .clickOnLoginHeaderBtn()
+        loginScreen.clickOnSignUpHereBtn()
+        signUpScreen.assertUserNameTxtHintPresent()
     }
 
     @Test
     fun userEmailTxtFieldPresent() {
-        onView(withId(R.id.mainChannelName))
-                .check(matches(isDisplayed()))
-        onView(withContentDescription("Open navigation drawer"))
-                .perform(click())
-        onView(withId(R.id.loginBtnNavHeader))
-                .perform(click())
-        onView(withId(R.id.loginCreateUserBtn))
-                .perform(click())
-        onView(withId(R.id.createEmailTxt))
-                .check(matches(allOf(withHint("email"), isDisplayed())))
+        mainScreen.clickOnHamburgerBtnMain()
+                .clickOnLoginHeaderBtn()
+        loginScreen.clickOnSignUpHereBtn()
+        signUpScreen.assertUserEmailTxtHintPresent()
     }
 
     @Test
     fun userPasswordTxtFieldPresent() {
-        onView(withId(R.id.mainChannelName))
-                .check(matches(isDisplayed()))
-        onView(withContentDescription("Open navigation drawer"))
-                .perform(click())
-        onView(withId(R.id.loginBtnNavHeader))
-                .perform(click())
-        onView(withId(R.id.loginCreateUserBtn))
-                .perform(click())
-        onView(withId(R.id.createPasswordTxt))
-                .check(matches(allOf(withHint("password"), isDisplayed())))
+        mainScreen.clickOnHamburgerBtnMain()
+                .clickOnLoginHeaderBtn()
+        loginScreen.clickOnSignUpHereBtn()
+        signUpScreen.assertUserPasswordTxtHintPresent()
     }
 
     @Test
     fun tapToGenerateTextViewPresentTest() {
-        onView(withId(R.id.mainChannelName))
-                .check(matches(isDisplayed()))
-        onView(withContentDescription("Open navigation drawer"))
-                .perform(click())
-        onView(withId(R.id.loginBtnNavHeader))
-                .perform(click())
-        onView(withId(R.id.loginCreateUserBtn))
-                .perform(click())
-        onView(withText("Tap to generate user avatar"))
-                .check(matches(allOf(isDisplayed(), not(isClickable()))))
+        mainScreen.clickOnHamburgerBtnMain()
+                .clickOnLoginHeaderBtn()
+        loginScreen.clickOnSignUpHereBtn()
+        signUpScreen.assertTapToGenerateTxtViewPresent()
     }
 
     @Test
-    fun generateAvatarImgPresentTest() {
-        onView(withId(R.id.mainChannelName))
-                .check(matches(isDisplayed()))
-        onView(withContentDescription("Open navigation drawer"))
-                .perform(click())
-        onView(withId(R.id.loginBtnNavHeader))
-                .perform(click())
-        onView(withId(R.id.loginCreateUserBtn))
-                .perform(click())
-        onView(withId(R.id.createAvatarImgView))
-                .check(matches(allOf(isClickable(), isDisplayed())))
+    fun generateAvatarImgPresentAndClickableTest() {
+        mainScreen.clickOnHamburgerBtnMain()
+                .clickOnLoginHeaderBtn()
+        loginScreen.clickOnSignUpHereBtn()
+        signUpScreen.assertAvatarImgPresentAndClickable()
     }
 
     @Test
-    fun generateBackgroundColorBtnPresentTest() {
-        onView(withId(R.id.mainChannelName))
-                .check(matches(isDisplayed()))
-        onView(withContentDescription("Open navigation drawer"))
-                .perform(click())
-        onView(withId(R.id.loginBtnNavHeader))
-                .perform(click())
-        onView(withId(R.id.loginCreateUserBtn))
-                .perform(click())
-        onView(withId(R.id.backgroundColorBtn))
-                .check(matches(allOf(isClickable(), isDisplayed(), withText(R.string.generate_background_color))))
+    fun generateBackgroundColorBtnPresentAndClickableTest() {
+        mainScreen.clickOnHamburgerBtnMain()
+                .clickOnLoginHeaderBtn()
+        loginScreen.clickOnSignUpHereBtn()
+        signUpScreen.assertBackgroundColorBtnPresentAndClickable()
     }
 
     @Test
-    fun createUserBtnPresentTest() {
-        onView(withId(R.id.mainChannelName))
-                .check(matches(isDisplayed()))
-        onView(withContentDescription("Open navigation drawer"))
-                .perform(click())
-        onView(withId(R.id.loginBtnNavHeader))
-                .perform(click())
-        onView(withId(R.id.loginCreateUserBtn))
-                .perform(click())
-        onView(withId(R.id.createUserBtn))
-                .check(matches(allOf(isClickable(), isDisplayed(), withText(R.string.create_user))))
+    fun createUserBtnPresentAndClickableTest() {
+        mainScreen.clickOnHamburgerBtnMain()
+                .clickOnLoginHeaderBtn()
+        loginScreen.clickOnSignUpHereBtn()
+        signUpScreen.assertCreateUserBtnPresentAndClickable()
     }
 }

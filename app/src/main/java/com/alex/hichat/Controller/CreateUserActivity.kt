@@ -104,7 +104,7 @@ class CreateUserActivity : AppCompatActivity() {
             }
         } else {
             // Error message if fields are not filled in completely
-            Toast.makeText(this, R.string.toast_create_user_empty_fields_passed, Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, R.string.toast_signup_user_empty_fields_passed, Toast.LENGTH_SHORT).show()
             enableSpinner(false)
         }
     }
