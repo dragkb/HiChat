@@ -1,33 +1,31 @@
-package com.alex.hichat
+package com.alex.hichat.Tests
 
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
-import com.alex.hichat.Controller.CreateUserActivity
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import android.support.test.espresso.Espresso
 import android.support.test.espresso.Espresso.onView
-import android.support.test.espresso.action.EspressoKey
 import android.support.test.espresso.action.ViewActions.*
-import android.support.test.espresso.assertion.PositionAssertions.isBelow
 import android.support.test.espresso.assertion.ViewAssertions.matches
 import android.support.test.espresso.matcher.RootMatchers.withDecorView
 import android.support.test.espresso.matcher.ViewMatchers.*
 import com.alex.hichat.Controller.MainActivity
+import com.alex.hichat.R
 import org.hamcrest.CoreMatchers.*
 import java.lang.Thread.sleep
 
 @RunWith(AndroidJUnit4::class)
-class CreateUserActivityTest {
+class SignUpActivityTests {
 
     @get:Rule
-    var createUserActivityTestRule = ActivityTestRule(MainActivity::class.java)
+    var myActivityTestRule = ActivityTestRule(MainActivity::class.java)
 
-    var randomPassGen = Math.random()
-    val newUserName = "zorro"
-    var newUserEmailGen = "zorro$randomPassGen@gmail.com"
-    val newUserPassword = "123456"
+    private var randomPassGen = Math.random()
+    private val newUserName = "zorro"
+    private var newUserEmailGen = "zorro$randomPassGen@gmail.com"
+    private val newUserPassword = "123456"
 
     @Test
     fun createNewUserTest() {
@@ -73,7 +71,7 @@ class CreateUserActivityTest {
                 .perform(click())
         sleep(700)
         onView(withText(R.string.toast_create_user_empty_fields_passed))
-                .inRoot(withDecorView(not(`is`(createUserActivityTestRule.activity.window.decorView))))
+                .inRoot(withDecorView(not(`is`(myActivityTestRule.activity.window.decorView))))
                 .check(matches(isDisplayed()))
     }
 
