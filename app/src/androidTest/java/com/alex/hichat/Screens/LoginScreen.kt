@@ -42,6 +42,10 @@ class LoginScreen : BaseScreen() {
         return LoggedInScreen()
     }
 
+    fun clickOnLoginBtnForToast() {
+        loginLoginBtn.perform(click())
+    }
+
     fun clickOnSignUpHereBtn(): SignUpScreen {
         loginSignUpBtn.perform(click())
         return SignUpScreen()

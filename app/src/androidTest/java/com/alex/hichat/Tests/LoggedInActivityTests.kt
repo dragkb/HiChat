@@ -1,9 +1,13 @@
 package com.alex.hichat.Tests
 
+import android.support.test.espresso.IdlingRegistry
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
 import com.alex.hichat.Controller.MainActivity
 import com.alex.hichat.Screens.MainScreen
+import com.alex.hichat.Services.IdlingResourceHolder
+import org.junit.After
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -21,6 +25,16 @@ class LoggedInActivityTests {
     private val invalidUserEmail = "abrakadabra@booms.com"
     private val invalidUserPassword = "12345678910"
 
+    @Before
+    fun idlingResourceRegister() {
+        IdlingRegistry.getInstance().register(IdlingResourceHolder.networkIdlingResource)
+    }
+
+    @After
+    fun idlingResourceUnregister() {
+        IdlingRegistry.getInstance().unregister(IdlingResourceHolder.networkIdlingResource)
+    }
+
     @Test
     fun loggedInUserAvatarPresentTest() {
         val mainScreen = MainScreen()
@@ -29,7 +43,7 @@ class LoggedInActivityTests {
         loginScreen.typeEmail(validUserEmail)
         loginScreen.typePassword(validUserPassword)
         val loggedInScreen = loginScreen.clickOnLoginBtn()
-        sleep(2000)
+//        sleep(2000)
         loggedInScreen.assertImagePresentTest()
         loggedInScreen.clickOnLogoutBtn()
     }
@@ -42,7 +56,7 @@ class LoggedInActivityTests {
         loginScreen.typeEmail(validUserEmail)
         loginScreen.typePassword(validUserPassword)
         val loggedInScreen = loginScreen.clickOnLoginBtn()
-        sleep(2000)
+//        sleep(2000)
         loggedInScreen.assertUserNamePresentTest(validUserName)
         loggedInScreen.clickOnLogoutBtn()
     }
@@ -55,7 +69,7 @@ class LoggedInActivityTests {
         loginScreen.typeEmail(validUserEmail)
         loginScreen.typePassword(validUserPassword)
         val loggedInScreen = loginScreen.clickOnLoginBtn()
-        sleep(2000)
+//        sleep(2000)
         loggedInScreen.assertUserEmailTest(validUserEmail)
         loggedInScreen.clickOnLogoutBtn()
     }
@@ -68,7 +82,7 @@ class LoggedInActivityTests {
         loginScreen.typeEmail(validUserEmail)
         loginScreen.typePassword(validUserPassword)
         val loggedInScreen = loginScreen.clickOnLoginBtn()
-        sleep(2000)
+//        sleep(2000)
         loggedInScreen.assertImagePositionTest()
         loggedInScreen.clickOnLogoutBtn()
     }
@@ -81,7 +95,7 @@ class LoggedInActivityTests {
         loginScreen.typeEmail(validUserEmail)
         loginScreen.typePassword(validUserPassword)
         val loggedInScreen = loginScreen.clickOnLoginBtn()
-        sleep(2000)
+//        sleep(2000)
         loggedInScreen.assertUserNamePositionTest()
         loggedInScreen.clickOnLogoutBtn()
     }
@@ -94,7 +108,7 @@ class LoggedInActivityTests {
         loginScreen.typeEmail(validUserEmail)
         loginScreen.typePassword(validUserPassword)
         val loggedInScreen = loginScreen.clickOnLoginBtn()
-        sleep(2000)
+//        sleep(2000)
         loggedInScreen.assertAddChannelBtnPresentTest()
         loggedInScreen.clickOnLogoutBtn()
     }

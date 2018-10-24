@@ -4,11 +4,13 @@ import android.content.Context
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.test.espresso.idling.CountingIdlingResource
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import com.alex.hichat.R
 import com.alex.hichat.Services.AuthService
+import com.alex.hichat.Services.IdlingResourceHolder
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity() {
@@ -28,16 +30,21 @@ class LoginActivity : AppCompatActivity() {
         if (email.isNotEmpty() && password.isNotEmpty()) {
             AuthService.loginUser(email, password) { loginSuccess ->
                 if (loginSuccess) {
+                    IdlingResourceHolder.networkIdlingResource.decrement()
                     AuthService.findUserByEmail(this) { findSuccess ->
                         if (findSuccess) {
                             enableSpinner(false)
                             finish()
+                            // Idling resource decrement
+                            IdlingResourceHolder.networkIdlingResource.decrement()
                         } else {
+                            IdlingResourceHolder.networkIdlingResource.decrement()
                             errorToast()
                             enableSpinner(false)
                         }
                     }
                 } else {
+                    IdlingResourceHolder.networkIdlingResource.decrement()
                     errorToast()
                     enableSpinner(false)
                 }

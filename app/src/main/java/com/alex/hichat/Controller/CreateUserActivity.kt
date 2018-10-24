@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.Toast
 import com.alex.hichat.R
 import com.alex.hichat.Services.AuthService
+import com.alex.hichat.Services.IdlingResourceHolder
 import com.alex.hichat.Utilities.BROADCAST_USER_DATA_CHANGE
 import kotlinx.android.synthetic.main.activity_create_user.*
 import java.util.*
@@ -77,8 +78,10 @@ class CreateUserActivity : AppCompatActivity() {
         if (userName.isNotEmpty() && email.isNotEmpty() && password.isNotEmpty()) {
             AuthService.registerUser(email, password) { registerSuccess ->
                 if (registerSuccess) {
+                    IdlingResourceHolder.networkIdlingResource.decrement()
                     AuthService.loginUser(email, password) { loginSuccess ->
                         if (loginSuccess) {
+                            IdlingResourceHolder.networkIdlingResource.decrement()
                             AuthService.createUser(userName, email, userAvatar, avatarColor) { createSuccess ->
                                 if (createSuccess) {
                                     // Create an Intent for broadcast
@@ -87,17 +90,22 @@ class CreateUserActivity : AppCompatActivity() {
                                     LocalBroadcastManager.getInstance(this).sendBroadcast(userDataChanged)
                                     enableSpinner(false)
                                     finish() // For dismiss activity use method finish()
+                                    // Idling resource decrement
+                                    IdlingResourceHolder.networkIdlingResource.decrement()
                                 } else {
+                                    IdlingResourceHolder.networkIdlingResource.decrement()
                                     errorToast()
                                     enableSpinner(false)
                                 }
                             }
                         } else {
+                            IdlingResourceHolder.networkIdlingResource.decrement()
                             errorToast()
                             enableSpinner(false)
                         }
                     }
                 } else {
+                    IdlingResourceHolder.networkIdlingResource.decrement()
                     errorToast()
                     enableSpinner(false)
                 }

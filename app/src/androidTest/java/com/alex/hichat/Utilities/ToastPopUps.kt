@@ -1,17 +1,16 @@
 package com.alex.hichat.Utilities
 
-    import android.support.test.espresso.Espresso.onView
-    import android.support.test.espresso.assertion.ViewAssertions.matches
-    import android.support.test.espresso.matcher.RootMatchers.withDecorView
-    import android.support.test.espresso.matcher.ViewMatchers.isDisplayed
-    import android.support.test.espresso.matcher.ViewMatchers.withText
-    import android.support.test.rule.ActivityTestRule
-    import com.alex.hichat.Controller.CreateUserActivity
-    import com.alex.hichat.Controller.LoginActivity
-    import com.alex.hichat.Controller.MainActivity
-    import com.alex.hichat.R
-    import org.hamcrest.CoreMatchers.`is`
-    import org.hamcrest.CoreMatchers.not
+import android.support.test.espresso.Espresso.onView
+import android.support.test.espresso.assertion.ViewAssertions.matches
+import android.support.test.espresso.matcher.RootMatchers.withDecorView
+import android.support.test.espresso.matcher.ViewMatchers.isDisplayed
+import android.support.test.espresso.matcher.ViewMatchers.withText
+import android.support.test.rule.ActivityTestRule
+import com.alex.hichat.Controller.CreateUserActivity
+import com.alex.hichat.Controller.LoginActivity
+import com.alex.hichat.Controller.MainActivity
+import com.alex.hichat.R
+import org.hamcrest.CoreMatchers.not
 
 class ToastPopUps {
 
@@ -24,60 +23,59 @@ class ToastPopUps {
     private val toastAllThreeFieldsTyped = onView(withText(R.string.toast_signup_user_empty_fields_passed))
     private val toastDialogMessage = onView(withText(R.string.toast_dialog_message))
 
-
     fun assertToastSomethingWrongPopUpped(myActivityTestRule: Any) {
         when (myActivityTestRule) {
             mainActivityTestRule -> toastSomethingWrong
-                    .inRoot(withDecorView(not(`is`(mainActivityTestRule.activity.window.decorView))))
-                    .check(matches(isDisplayed()))
+                .inRoot(withDecorView(not(mainActivityTestRule.activity.window.decorView)))
+                .check(matches(isDisplayed()))
             loginActivityTestRule -> toastSomethingWrong
-                    .inRoot(withDecorView(not(`is`(loginActivityTestRule.activity.window.decorView))))
-                    .check(matches(isDisplayed()))
+                .inRoot(withDecorView(not(loginActivityTestRule.activity.window.decorView)))
+                .check(matches(isDisplayed()))
             signUpActivityTestRule -> toastSomethingWrong
-                    .inRoot(withDecorView(not(`is`(loginActivityTestRule.activity.window.decorView))))
-                    .check(matches(isDisplayed()))
+                .inRoot(withDecorView(not(loginActivityTestRule.activity.window.decorView)))
+                .check(matches(isDisplayed()))
         }
     }
 
     fun assertToastBothFieldsWrong(myActivityTestRule: Any) {
         when (myActivityTestRule) {
             mainActivityTestRule -> toastBothFieldsWrong
-                    .inRoot(withDecorView(not(`is`(mainActivityTestRule.activity.window.decorView))))
-                    .check(matches(isDisplayed()))
+                .inRoot(withDecorView(not(mainActivityTestRule.activity.window.decorView)))
+                .check(matches(isDisplayed()))
             loginActivityTestRule -> toastBothFieldsWrong
-                    .inRoot(withDecorView(not(`is`(loginActivityTestRule.activity.window.decorView))))
-                    .check(matches(isDisplayed()))
+                .inRoot(withDecorView(not(loginActivityTestRule.activity.window.decorView)))
+                .check(matches(isDisplayed()))
             signUpActivityTestRule -> toastBothFieldsWrong
-                    .inRoot(withDecorView(not(`is`(loginActivityTestRule.activity.window.decorView))))
-                    .check(matches(isDisplayed()))
+                .inRoot(withDecorView(not(loginActivityTestRule.activity.window.decorView)))
+                .check(matches(isDisplayed()))
         }
     }
 
     fun assertToastSignUpAllFieldsFilledIn(myActivityTestRule: Any) {
         when (myActivityTestRule) {
             mainActivityTestRule -> toastAllThreeFieldsTyped
-                    .inRoot(withDecorView(not(`is`(mainActivityTestRule.activity.window.decorView))))
-                    .check(matches(isDisplayed()))
+                .inRoot(withDecorView(not(mainActivityTestRule.activity.window.decorView)))
+                .check(matches(isDisplayed()))
             loginActivityTestRule -> toastAllThreeFieldsTyped
-                    .inRoot(withDecorView(not(`is`(loginActivityTestRule.activity.window.decorView))))
-                    .check(matches(isDisplayed()))
+                .inRoot(withDecorView(not(loginActivityTestRule.activity.window.decorView)))
+                .check(matches(isDisplayed()))
             signUpActivityTestRule -> toastAllThreeFieldsTyped
-                    .inRoot(withDecorView(not(`is`(loginActivityTestRule.activity.window.decorView))))
-                    .check(matches(isDisplayed()))
+                .inRoot(withDecorView(not(loginActivityTestRule.activity.window.decorView)))
+                .check(matches(isDisplayed()))
         }
     }
 
     fun assertToastDialogMessagePopUp() {
-        when(mainActivityTestRule) {
+        when (mainActivityTestRule) {
             mainActivityTestRule -> toastDialogMessage
-                    .inRoot(withDecorView(not(`is`(mainActivityTestRule.activity.window.decorView))))
-                    .check(matches(isDisplayed()))
+                .inRoot(withDecorView(not(mainActivityTestRule.activity.window.decorView)))
+                .check(matches(isDisplayed()))
             loginActivityTestRule -> toastDialogMessage
-                    .inRoot(withDecorView(not(`is`(loginActivityTestRule.activity.window.decorView))))
-                    .check(matches(isDisplayed()))
+                .inRoot(withDecorView(not(loginActivityTestRule.activity.window.decorView)))
+                .check(matches(isDisplayed()))
             signUpActivityTestRule -> toastDialogMessage
-                    .inRoot(withDecorView(not(`is`(loginActivityTestRule.activity.window.decorView))))
-                    .check(matches(isDisplayed()))
+                .inRoot(withDecorView(not(loginActivityTestRule.activity.window.decorView)))
+                .check(matches(isDisplayed()))
         }
     }
 }

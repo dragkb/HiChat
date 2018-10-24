@@ -6,10 +6,14 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import android.support.test.espresso.Espresso
+import android.support.test.espresso.IdlingRegistry
 import com.alex.hichat.Controller.MainActivity
 import com.alex.hichat.Screens.LoggedInScreen
 import com.alex.hichat.Screens.MainScreen
+import com.alex.hichat.Services.IdlingResourceHolder
 import com.alex.hichat.Utilities.ToastPopUps
+import org.junit.After
+import org.junit.Before
 import java.lang.Thread.sleep
 
 @RunWith(AndroidJUnit4::class)
@@ -22,6 +26,16 @@ class SignUpActivityTests {
     private val newUserName = "zorro"
     private var newUserEmail = "zorro$randomPassword@gmail.com"
     private val newUserPassword = "123456"
+
+    @Before
+    fun idlingResourceRegister() {
+        IdlingRegistry.getInstance().register(IdlingResourceHolder.networkIdlingResource)
+    }
+
+    @After
+    fun idlingResourceUnregister() {
+        IdlingRegistry.getInstance().unregister(IdlingResourceHolder.networkIdlingResource)
+    }
 
     @Test
     fun createNewUserTest() {
@@ -36,7 +50,7 @@ class SignUpActivityTests {
         signUpScreen.generateNewAvatar(3)
         signUpScreen.generateBackgroundColor(3)
         signUpScreen.clickOnCreateUserBtn()
-        sleep(6000)
+//        sleep(6000)
         val loggedInScreen = LoggedInScreen()
         loggedInScreen.assertUserEmailTest(newUserEmail)
         loggedInScreen.clickOnLogoutBtn()
@@ -49,7 +63,7 @@ class SignUpActivityTests {
         val loginScreen = mainScreen.clickOnLoginHeaderBtn()
         val signUpScreen = loginScreen.clickOnSignUpHereBtn()
         signUpScreen.clickOnCreateUserBtn()
-        sleep(700)
+//        sleep(700)
         val toastPopUps = ToastPopUps()
         toastPopUps.assertToastSignUpAllFieldsFilledIn(myActivityTestRule)
     }

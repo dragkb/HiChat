@@ -17,6 +17,8 @@ object AuthService {
     // For volley API we need context, and the body(check Postman body) of our request and
     // completion handler to understand if our request finished successfully or not
     fun registerUser(email: String, password: String, complete: (Boolean) -> Unit) {
+        // Increment idling resource
+        IdlingResourceHolder.networkIdlingResource.increment()
 
         // Json object that we are passing
         val jsonBody = JSONObject()
@@ -51,6 +53,9 @@ object AuthService {
 
     fun loginUser(email: String, password: String, complete: (Boolean) -> Unit) {
 
+        // Increment idling resource
+        IdlingResourceHolder.networkIdlingResource.increment()
+
         val jsonBody = JSONObject()
         jsonBody.put("email", email)
         jsonBody.put("password", password)
@@ -84,9 +89,14 @@ object AuthService {
         }
 
         App.sharedPrefs.requestQueue.add(loginRequest)
+
+        // Decrement Idling resource
+//        IdlingResourceHolder.networkIdlingResource.decrement()
     }
 
     fun createUser(name: String, email: String, avatarName: String, avatarColor: String, complete: (Boolean) -> Unit) {
+        // Increment idling resource
+        IdlingResourceHolder.networkIdlingResource.increment()
 
         // All parameters are referred to the Postman request body
         val jsonBody = JSONObject()
@@ -136,6 +146,8 @@ object AuthService {
 
     // Don't need the body since its only Get request
     fun findUserByEmail(context: Context, complete: (Boolean) -> Unit) {
+        // Increment idling resource
+        IdlingResourceHolder.networkIdlingResource.increment()
 
         val findRequest = object : JsonObjectRequest(Method.GET, "$URL_FIND_USER_BY_EMAIL${App.sharedPrefs.userEmail}", null, Response.Listener { response ->
 
