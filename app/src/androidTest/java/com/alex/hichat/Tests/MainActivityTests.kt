@@ -14,40 +14,44 @@ class MainActivityTests {
     @get:Rule
     var myActivityTestRule = ActivityTestRule(MainActivity::class.java)
 
-    private val mainScreen = MainScreen()
-
     @Test
     fun mainIsMainActivityScreenLaunchesTest() {
+        val mainScreen = MainScreen()
         mainScreen.assertHamburgerBtnDisplayedAndClickable()
     }
 
     @Test
     fun mainLoginBtnPresentAndClickableTest() {
+        val mainScreen = MainScreen()
         mainScreen.clickOnHamburgerBtnMain()
-                .assertLoginBtnDisplayedAndClickable()
+        mainScreen.assertLoginBtnDisplayedAndClickable()
     }
 
     @Test
     fun mainChannelBtnPresentTest() {
+        val mainScreen = MainScreen()
         mainScreen.clickOnHamburgerBtnMain()
-                .assertAddChannelBtnDisplayed()
+        mainScreen.assertAddChannelBtnDisplayed()
     }
 
     @Test
     fun mainDefaultAccountImgPresentTest() {
+        val mainScreen = MainScreen()
         mainScreen.clickOnHamburgerBtnMain()
-                .assertAccountImgDisplayed()
+        mainScreen.assertAccountImgDisplayed()
     }
 
     @Test
     fun mainDefaultAccountImgPositionTest() {
+        val mainScreen = MainScreen()
         mainScreen.clickOnHamburgerBtnMain()
-                .assertPositionAccountImgAboveOfLoginBtn()
+        mainScreen.assertPositionAccountImgAboveOfLoginBtn()
     }
 
     @Test
     fun mainChannelBtnPositionTest() {
+        val mainScreen = MainScreen()
         mainScreen.clickOnHamburgerBtnMain()
-                .assertPositionChannelBtnLeftOfLoginBtn()
+        mainScreen.assertPositionChannelBtnLeftOfLoginBtn()
     }
 }

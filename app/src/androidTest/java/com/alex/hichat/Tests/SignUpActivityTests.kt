@@ -7,9 +7,8 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import android.support.test.espresso.Espresso
 import com.alex.hichat.Controller.MainActivity
-import com.alex.hichat.Screens.LoginScreen
+import com.alex.hichat.Screens.LoggedInScreen
 import com.alex.hichat.Screens.MainScreen
-import com.alex.hichat.Screens.SignUpScreen
 import com.alex.hichat.Utilities.ToastPopUps
 import java.lang.Thread.sleep
 
@@ -24,91 +23,97 @@ class SignUpActivityTests {
     private var newUserEmail = "zorro$randomPassword@gmail.com"
     private val newUserPassword = "123456"
 
-    private val mainScreen = MainScreen()
-    private val loginScreen = LoginScreen()
-    private val signUpScreen = SignUpScreen()
-    private val toastPopUps = ToastPopUps()
-
     @Test
     fun createNewUserTest() {
+        val mainScreen = MainScreen()
         mainScreen.clickOnHamburgerBtnMain()
-                .clickOnLoginHeaderBtn()
-        loginScreen.clickOnSignUpHereBtn()
+        val loginScreen = mainScreen.clickOnLoginHeaderBtn()
+        val signUpScreen = loginScreen.clickOnSignUpHereBtn()
         signUpScreen.typeNewName(newUserName)
-                .typeNewEmail(newUserEmail)
-                .typeNewPassword(newUserPassword)
+        signUpScreen.typeNewEmail(newUserEmail)
+        signUpScreen.typeNewPassword(newUserPassword)
         Espresso.closeSoftKeyboard()
         signUpScreen.generateNewAvatar(3)
-                .generateBackgroundColor(3)
-                .clickOnCreateUserBtn()
+        signUpScreen.generateBackgroundColor(3)
+        signUpScreen.clickOnCreateUserBtn()
         sleep(6000)
-        loginScreen.assertUserEmailTest(newUserEmail)
-        mainScreen.clickOnLoginHeaderBtn()
+        val loggedInScreen = LoggedInScreen()
+        loggedInScreen.assertUserEmailTest(newUserEmail)
+        loggedInScreen.clickOnLogoutBtn()
     }
 
     @Test
-    fun emptyCreateUserBtnEmptyFieldsToastMessageTest() {
+    fun createUserToastEmptyFieldsMessageTest() {
+        val mainScreen = MainScreen()
         mainScreen.clickOnHamburgerBtnMain()
-                .clickOnLoginHeaderBtn()
-        loginScreen.clickOnSignUpHereBtn()
+        val loginScreen = mainScreen.clickOnLoginHeaderBtn()
+        val signUpScreen = loginScreen.clickOnSignUpHereBtn()
         signUpScreen.clickOnCreateUserBtn()
         sleep(700)
+        val toastPopUps = ToastPopUps()
         toastPopUps.assertToastSignUpAllFieldsFilledIn(myActivityTestRule)
     }
 
     @Test
     fun userNameTxtFieldHintPresent() {
+        val mainScreen = MainScreen()
         mainScreen.clickOnHamburgerBtnMain()
-                .clickOnLoginHeaderBtn()
-        loginScreen.clickOnSignUpHereBtn()
+        val loginScreen = mainScreen.clickOnLoginHeaderBtn()
+        val signUpScreen = loginScreen.clickOnSignUpHereBtn()
         signUpScreen.assertUserNameTxtHintPresent()
     }
 
     @Test
     fun userEmailTxtFieldPresent() {
+        val mainScreen = MainScreen()
         mainScreen.clickOnHamburgerBtnMain()
-                .clickOnLoginHeaderBtn()
-        loginScreen.clickOnSignUpHereBtn()
+        val loginScreen = mainScreen.clickOnLoginHeaderBtn()
+        val signUpScreen = loginScreen.clickOnSignUpHereBtn()
         signUpScreen.assertUserEmailTxtHintPresent()
     }
 
     @Test
     fun userPasswordTxtFieldPresent() {
+        val mainScreen = MainScreen()
         mainScreen.clickOnHamburgerBtnMain()
-                .clickOnLoginHeaderBtn()
-        loginScreen.clickOnSignUpHereBtn()
+        val loginScreen = mainScreen.clickOnLoginHeaderBtn()
+        val signUpScreen = loginScreen.clickOnSignUpHereBtn()
         signUpScreen.assertUserPasswordTxtHintPresent()
     }
 
     @Test
     fun tapToGenerateTextViewPresentTest() {
+        val mainScreen = MainScreen()
         mainScreen.clickOnHamburgerBtnMain()
-                .clickOnLoginHeaderBtn()
-        loginScreen.clickOnSignUpHereBtn()
+        val loginScreen = mainScreen.clickOnLoginHeaderBtn()
+        val signUpScreen = loginScreen.clickOnSignUpHereBtn()
         signUpScreen.assertTapToGenerateTxtViewPresent()
     }
 
     @Test
     fun generateAvatarImgPresentAndClickableTest() {
+        val mainScreen = MainScreen()
         mainScreen.clickOnHamburgerBtnMain()
-                .clickOnLoginHeaderBtn()
-        loginScreen.clickOnSignUpHereBtn()
+        val loginScreen = mainScreen.clickOnLoginHeaderBtn()
+        val signUpScreen = loginScreen.clickOnSignUpHereBtn()
         signUpScreen.assertAvatarImgPresentAndClickable()
     }
 
     @Test
     fun generateBackgroundColorBtnPresentAndClickableTest() {
+        val mainScreen = MainScreen()
         mainScreen.clickOnHamburgerBtnMain()
-                .clickOnLoginHeaderBtn()
-        loginScreen.clickOnSignUpHereBtn()
+        val loginScreen = mainScreen.clickOnLoginHeaderBtn()
+        val signUpScreen = loginScreen.clickOnSignUpHereBtn()
         signUpScreen.assertBackgroundColorBtnPresentAndClickable()
     }
 
     @Test
     fun createUserBtnPresentAndClickableTest() {
+        val mainScreen = MainScreen()
         mainScreen.clickOnHamburgerBtnMain()
-                .clickOnLoginHeaderBtn()
-        loginScreen.clickOnSignUpHereBtn()
+        val loginScreen = mainScreen.clickOnLoginHeaderBtn()
+        val signUpScreen = loginScreen.clickOnSignUpHereBtn()
         signUpScreen.assertCreateUserBtnPresentAndClickable()
     }
 }

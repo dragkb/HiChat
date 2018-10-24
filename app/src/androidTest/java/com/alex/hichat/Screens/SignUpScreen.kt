@@ -10,7 +10,7 @@ import com.alex.hichat.R
 import org.hamcrest.CoreMatchers.allOf
 import org.hamcrest.CoreMatchers.not
 
-class SignUpScreen {
+class SignUpScreen : BaseScreen() {
 
     private val newUserNameTxt: ViewInteraction
         get() = onView(withId(R.id.createUserNameTxt))
@@ -33,36 +33,39 @@ class SignUpScreen {
     private val createUserBtn: ViewInteraction
         get() = onView(withId(R.id.createUserBtn))
 
-    fun typeNewName(name: String) : SignUpScreen{
+    override val uniqueView: ViewInteraction
+        get() = createUserBtn
+
+    init {
+        uniqueView.check(matches(isDisplayed()))
+    }
+
+    fun typeNewName(name: String) {
         newUserNameTxt.perform(typeText(name))
-        return this
+
     }
 
-    fun typeNewEmail(email: String) : SignUpScreen {
+    fun typeNewEmail(email: String) {
         newUserEmailTxt.perform(typeText(email))
-        return this
     }
 
-    fun typeNewPassword(password: String) : SignUpScreen {
+    fun typeNewPassword(password: String) {
         newUserPasswordTxt.perform(typeText(password))
-        return this
     }
 
-    fun generateNewAvatar(numberOfClicks: Int) : SignUpScreen{
+    fun generateNewAvatar(numberOfClicks: Int) {
         for (i in 1..numberOfClicks) {
             generateAvatarImgView.perform(click())
         }
-        return this
     }
 
-    fun generateBackgroundColor(numberOfClicks: Int) : SignUpScreen {
+    fun generateBackgroundColor(numberOfClicks: Int) {
         for (i in 1..numberOfClicks){
             generateBackgroundColorBtn.perform(click())
         }
-        return this
     }
 
-    fun clickOnCreateUserBtn() {
+    fun clickOnCreateUserBtn()  {
         createUserBtn.perform(click())
     }
 

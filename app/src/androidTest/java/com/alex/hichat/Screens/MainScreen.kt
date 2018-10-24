@@ -10,7 +10,7 @@ import android.support.test.espresso.matcher.ViewMatchers.*
 import com.alex.hichat.R
 import org.hamcrest.CoreMatchers.allOf
 
-class MainScreen {
+class MainScreen : BaseScreen() {
 
     private val mainHeaderText: ViewInteraction
         get() = onView(withId(R.id.mainChannelName))
@@ -27,9 +27,20 @@ class MainScreen {
     private val accountImg: ViewInteraction
         get() = onView(withId(R.id.userImgNavHeader))
 
-    fun clickOnHamburgerBtnMain(): MainScreen {
+    override val uniqueView: ViewInteraction
+        get() = hamburgerBtn
+
+    init {
+        uniqueView.check(matches(isDisplayed()))
+    }
+
+    fun clickOnHamburgerBtnMain() {
         hamburgerBtn.perform(click())
-        return this
+    }
+
+    fun clickOnLoginHeaderBtn(): LoginScreen {
+        loginBtn.perform(click())
+        return LoginScreen()
     }
 
     fun assertHamburgerBtnDisplayedAndClickable() {
@@ -52,10 +63,6 @@ class MainScreen {
         accountImg.check(matches(isDisplayed()))
     }
 
-    fun clickOnLoginHeaderBtn() {
-        loginBtn.perform(click())
-    }
-
     fun assertPositionAccountImgAboveOfLoginBtn() {
         accountImg.check(isCompletelyAbove(withId(R.id.loginBtnNavHeader)))
     }
@@ -64,12 +71,11 @@ class MainScreen {
         addChannelBtn.check(isCompletelyRightOf(withId(R.id.loginBtnNavHeader)))
     }
 
-    fun assertThatLoggedIn() {
-        loginBtn.check(matches(allOf(withText("LOGOUT"), isClickable())))
-    }
-
     fun assertThatLoggedOut() {
         loginBtn.check(matches(allOf(withText("LOGIN"), isClickable())))
-//        mainHeaderText.check(matches(withText("Please Log In")))
+    }
+
+    fun assertNewChannelCreated(channelName: String) {
+
     }
 }

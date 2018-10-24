@@ -16,6 +16,7 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import android.widget.TextView
+import android.widget.Toast
 import com.alex.hichat.Adapters.MessageAdapter
 import com.alex.hichat.Model.Channel
 import com.alex.hichat.Model.Message
@@ -187,7 +188,10 @@ class MainActivity : AppCompatActivity() {
 
                         // Create a channel with the channel name and description
                         // Socektio - emit() method sending info from out client to API
-                        socket.emit("newChannel", channelName, channelDesc)
+                        if(channelName != "" && channelDesc != "") {
+                            socket.emit("newChannel", channelName, channelDesc)
+                        } else
+                            Toast.makeText(this, R.string.toast_dialog_message, Toast.LENGTH_LONG).show()
                     }
                     .setNegativeButton("Cancel") { _, _ ->
                         // Cancel and close the dialog
