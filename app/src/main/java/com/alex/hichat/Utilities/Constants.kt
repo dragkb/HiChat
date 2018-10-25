@@ -24,7 +24,7 @@ const val SOCKET_URL = "https://hismackchat.herokuapp.com/"
 // Url for find all channels
 const val URL_GET_CHANNELS = "${BASE_URL}channel"
 
-//Url for getting messages
+// Url for getting messages
 const val URL_GET_MESSAGES = "${BASE_URL}message/byChannel/"
 
 // Broadcast const to say another activity that something changed

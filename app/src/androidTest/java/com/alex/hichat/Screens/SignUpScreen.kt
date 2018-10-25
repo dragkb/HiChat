@@ -5,10 +5,19 @@ import android.support.test.espresso.ViewInteraction
 import android.support.test.espresso.action.ViewActions.click
 import android.support.test.espresso.action.ViewActions.typeText
 import android.support.test.espresso.assertion.ViewAssertions.matches
-import android.support.test.espresso.matcher.ViewMatchers.*
+import android.support.test.espresso.matcher.ViewMatchers.withId
+import android.support.test.espresso.matcher.ViewMatchers.withText
+import android.support.test.espresso.matcher.ViewMatchers.isDisplayed
+import android.support.test.espresso.matcher.ViewMatchers.withHint
+import android.support.test.espresso.matcher.ViewMatchers.isClickable
 import com.alex.hichat.R
 import org.hamcrest.CoreMatchers.allOf
 import org.hamcrest.CoreMatchers.not
+
+enum class CreateUserValidation {
+    VALID_USER,
+    INVALID_USER
+}
 
 class SignUpScreen : BaseScreen() {
 
@@ -42,7 +51,6 @@ class SignUpScreen : BaseScreen() {
 
     fun typeNewName(name: String) {
         newUserNameTxt.perform(typeText(name))
-
     }
 
     fun typeNewEmail(email: String) {
@@ -60,86 +68,93 @@ class SignUpScreen : BaseScreen() {
     }
 
     fun generateBackgroundColor(numberOfClicks: Int) {
-        for (i in 1..numberOfClicks){
+        for (i in 1..numberOfClicks) {
             generateBackgroundColorBtn.perform(click())
         }
     }
 
-    fun clickOnCreateUserBtn()  {
+    fun clickOnCreateUserBtn(user: CreateUserValidation): Any {
         createUserBtn.perform(click())
+        when (user) {
+            CreateUserValidation.VALID_USER -> return LoggedInScreen()
+            CreateUserValidation.INVALID_USER -> return SignUpScreen()
+        }
     }
 
     fun assertUserNameTxtHintPresent() {
         newUserNameTxt
-                .check(
-                        matches(
-                                allOf(
-                                        withHint("user name"), isDisplayed()
-                                )
-                        )
+            .check(
+                matches(
+                    allOf(
+                        withHint("user name"), isDisplayed()
+                    )
                 )
+            )
     }
 
     fun assertUserEmailTxtHintPresent() {
         newUserEmailTxt
-                .check(
-                        matches(
-                                allOf(
-                                        withHint("email"), isDisplayed()
-                                )
-                        )
+            .check(
+                matches(
+                    allOf(
+                        withHint("email"), isDisplayed()
+                    )
                 )
+            )
     }
 
     fun assertUserPasswordTxtHintPresent() {
         newUserPasswordTxt
-                .check(
-                        matches(
-                                allOf(
-                                        withHint("password"), isDisplayed()
-                                )
-                        )
+            .check(
+                matches(
+                    allOf(
+                        withHint("password"), isDisplayed()
+                    )
                 )
+            )
     }
 
     fun assertTapToGenerateTxtViewPresent() {
         tapToGenerateTxtView
-                .check(
-                        matches(
-                                allOf(isDisplayed(), not(isClickable())
-                                )
-                        )
+            .check(
+                matches(
+                    allOf(
+                        isDisplayed(), not(isClickable())
+                    )
                 )
+            )
     }
 
     fun assertAvatarImgPresentAndClickable() {
         generateAvatarImgView
-                .check(
-                        matches(
-                                allOf(isClickable(), isDisplayed()
-                                )
-                        )
+            .check(
+                matches(
+                    allOf(
+                        isClickable(), isDisplayed()
+                    )
                 )
+            )
     }
 
     fun assertBackgroundColorBtnPresentAndClickable() {
         generateBackgroundColorBtn
-                .check(
-                        matches(
-                                allOf(isClickable(), isDisplayed(), withText(R.string.generate_background_color)
-                                )
-                        )
+            .check(
+                matches(
+                    allOf(
+                        isClickable(), isDisplayed(), withText(R.string.generate_background_color)
+                    )
                 )
+            )
     }
 
     fun assertCreateUserBtnPresentAndClickable() {
         createUserBtn
-                .check(
-                        matches(
-                                allOf(
-                                        isClickable(), isDisplayed(), withText(R.string.create_user)
-                                )
-                        )
+            .check(
+                matches(
+                    allOf(
+                        isClickable(), isDisplayed(), withText(R.string.create_user)
+                    )
                 )
+            )
     }
 }

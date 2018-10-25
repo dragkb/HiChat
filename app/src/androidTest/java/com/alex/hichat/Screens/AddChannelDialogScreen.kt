@@ -5,6 +5,7 @@ import android.support.test.espresso.ViewInteraction
 import android.support.test.espresso.action.ViewActions.click
 import android.support.test.espresso.action.ViewActions.typeText
 import android.support.test.espresso.assertion.ViewAssertions.matches
+import android.support.test.espresso.matcher.ViewMatchers.withHint
 import android.support.test.espresso.matcher.ViewMatchers.withId
 import android.support.test.espresso.matcher.ViewMatchers.withText
 import com.alex.hichat.R
@@ -45,6 +46,14 @@ class AddChannelDialogScreen {
     }
 
     fun assertDialogPoppedUp() {
-        channelName.check(matches( withText("Add Channel")))
+        channelName.check(matches(withText("Add Channel")))
+    }
+
+    fun assertChannelNameHintPresent() {
+        addChannelNameTxt.check(matches(withHint("channel name")))
+    }
+
+    fun assertChannelDescriptionHintPresent() {
+        addChannelDescTxt.check(matches(withHint("channel description")))
     }
 }

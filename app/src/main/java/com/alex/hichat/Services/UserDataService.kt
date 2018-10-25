@@ -2,7 +2,7 @@ package com.alex.hichat.Services
 
 import android.graphics.Color
 import com.alex.hichat.Controller.App
-import java.util.*
+import java.util.Scanner
 
 object UserDataService {
 

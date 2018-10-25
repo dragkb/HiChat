@@ -12,7 +12,7 @@ import com.alex.hichat.Services.AuthService
 import com.alex.hichat.Services.IdlingResourceHolder
 import com.alex.hichat.Utilities.BROADCAST_USER_DATA_CHANGE
 import kotlinx.android.synthetic.main.activity_create_user.*
-import java.util.*
+import java.util.Random
 
 class CreateUserActivity : AppCompatActivity() {
 
@@ -82,12 +82,15 @@ class CreateUserActivity : AppCompatActivity() {
                     AuthService.loginUser(email, password) { loginSuccess ->
                         if (loginSuccess) {
                             IdlingResourceHolder.networkIdlingResource.decrement()
-                            AuthService.createUser(userName, email, userAvatar, avatarColor) { createSuccess ->
+                            AuthService.createUser(
+                                userName, email, userAvatar, avatarColor) { createSuccess ->
                                 if (createSuccess) {
                                     // Create an Intent for broadcast
                                     val userDataChanged = Intent(BROADCAST_USER_DATA_CHANGE)
                                     // Creating broadcast which saying that data changed to other activities
-                                    LocalBroadcastManager.getInstance(this).sendBroadcast(userDataChanged)
+                                    LocalBroadcastManager
+                                        .getInstance(this)
+                                        .sendBroadcast(userDataChanged)
                                     enableSpinner(false)
                                     finish() // For dismiss activity use method finish()
                                     // Idling resource decrement
@@ -112,7 +115,9 @@ class CreateUserActivity : AppCompatActivity() {
             }
         } else {
             // Error message if fields are not filled in completely
-            Toast.makeText(this, R.string.toast_signup_user_empty_fields_passed, Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                this, R.string.toast_signup_user_empty_fields_passed, Toast.LENGTH_SHORT)
+                .show()
             enableSpinner(false)
         }
     }
@@ -134,5 +139,4 @@ class CreateUserActivity : AppCompatActivity() {
         backgroundColorBtn.isEnabled = !enable
         createUserBtn.isEnabled = !enable
     }
-
 }

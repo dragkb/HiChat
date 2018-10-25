@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.test.espresso.idling.CountingIdlingResource
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
@@ -50,7 +49,9 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
         } else {
-            Toast.makeText(this, R.string.toast_fill_both_email_password_fields, Toast.LENGTH_LONG).show()
+            Toast.makeText(
+                this, R.string.toast_fill_both_email_password_fields, Toast.LENGTH_LONG)
+                .show()
             enableSpinner(false)
         }
     }

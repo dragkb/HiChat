@@ -27,7 +27,8 @@ object AuthService {
         val requestBody = jsonBody.toString()
 
         // Register user by providing Method - POST, URL for API, Success response and Error response
-        val registerRequest = object : StringRequest(Method.POST, URL_REGISTER, Response.Listener { response ->
+        val registerRequest = object : StringRequest(
+            Method.POST, URL_REGISTER, Response.Listener { response ->
             println(response)
             // If success print success message and set complete to true. This is where we parse the String
             complete(true)
@@ -61,16 +62,21 @@ object AuthService {
         jsonBody.put("password", password)
         val requestBody = jsonBody.toString()
 
-        val loginRequest = object : JsonObjectRequest(Method.POST, URL_LOGIN, null, Response.Listener { response ->
+        val loginRequest = object : JsonObjectRequest(
+            Method.POST, URL_LOGIN, null, Response.Listener { response ->
             // This is where we parse the String
             // getString throws JSONException, so we need try catch
             try {
-                App.sharedPrefs.userEmail = response.getString("user")  // Parse user's email and assigns it to userEmail instance variable
-                App.sharedPrefs.authToken = response.getString("token") // Parse Json token and assign it to instance variable authToken
-                App.sharedPrefs.isLoggedIn = true                             // isLoggedIn = true because we logged in
+                // Parse user's email and assigns it to userEmail instance variable
+                App.sharedPrefs.userEmail = response.getString("user")
+                // Parse Json token and assign it to instance variable authToken
+                App.sharedPrefs.authToken = response.getString("token")
+                // isLoggedIn = true because we logged in
+                App.sharedPrefs.isLoggedIn = true
                 complete(true)
             } catch (e: JSONException) {
-                Log.d("JSON", "EXC: " + e.localizedMessage) // Show the exception in debug logcat if fails
+                // Show the exception in debug logcat if fails
+                Log.d("JSON", "EXC: " + e.localizedMessage)
                 complete(false)
             }
         }, Response.ErrorListener { error ->
@@ -94,7 +100,13 @@ object AuthService {
 //        IdlingResourceHolder.networkIdlingResource.decrement()
     }
 
-    fun createUser(name: String, email: String, avatarName: String, avatarColor: String, complete: (Boolean) -> Unit) {
+    fun createUser(
+        name: String,
+        email: String,
+        avatarName: String,
+        avatarColor: String,
+        complete: (Boolean) -> Unit
+    ) {
         // Increment idling resource
         IdlingResourceHolder.networkIdlingResource.increment()
 
@@ -106,7 +118,8 @@ object AuthService {
         jsonBody.put("avatarColor", avatarColor)
         val requestBody = jsonBody.toString()
 
-        val createRequest = object : JsonObjectRequest(Method.POST, URL_CREATE_USER, null, Response.Listener { response ->
+        val createRequest = object : JsonObjectRequest(
+            Method.POST, URL_CREATE_USER, null, Response.Listener { response ->
 
             try {
                 UserDataService.name = response.getString("name")
@@ -115,12 +128,10 @@ object AuthService {
                 UserDataService.avatarColor = response.getString("avatarColor")
                 UserDataService.id = response.getString("_id")
                 complete(true)
-
             } catch (e: JSONException) {
                 Log.d("JSON", "EXC: " + e.localizedMessage)
                 complete(false)
             }
-
         }, Response.ErrorListener { error ->
             Log.d("ERROR", "Could not add user: $error")
             complete(false)
@@ -149,7 +160,9 @@ object AuthService {
         // Increment idling resource
         IdlingResourceHolder.networkIdlingResource.increment()
 
-        val findRequest = object : JsonObjectRequest(Method.GET, "$URL_FIND_USER_BY_EMAIL${App.sharedPrefs.userEmail}", null, Response.Listener { response ->
+        val findRequest = object : JsonObjectRequest(
+            Method.GET, "$URL_FIND_USER_BY_EMAIL${App.sharedPrefs.userEmail}",
+            null, Response.Listener { response ->
 
             try {
                 UserDataService.name = response.getString("name")
@@ -162,15 +175,12 @@ object AuthService {
                 val userDataChange = Intent(BROADCAST_USER_DATA_CHANGE)
                 LocalBroadcastManager.getInstance(context).sendBroadcast(userDataChange)
                 complete(true)
-
             } catch (e: JSONException) {
                 Log.d("JSON", "EXC" + e.localizedMessage)
             }
-
         }, Response.ErrorListener { error ->
             Log.d("ERROR", "Could not find user by email")
             complete(false)
-
         }) {
             override fun getBodyContentType(): String {
                 return "application/json; charset=utf-8"

@@ -6,7 +6,11 @@ import android.support.test.espresso.action.ViewActions.click
 import android.support.test.espresso.assertion.PositionAssertions.isCompletelyAbove
 import android.support.test.espresso.assertion.PositionAssertions.isCompletelyRightOf
 import android.support.test.espresso.assertion.ViewAssertions.matches
-import android.support.test.espresso.matcher.ViewMatchers.*
+import android.support.test.espresso.matcher.ViewMatchers.withId
+import android.support.test.espresso.matcher.ViewMatchers.withContentDescription
+import android.support.test.espresso.matcher.ViewMatchers.isDisplayed
+import android.support.test.espresso.matcher.ViewMatchers.isClickable
+import android.support.test.espresso.matcher.ViewMatchers.withText
 import com.alex.hichat.R
 import org.hamcrest.CoreMatchers.allOf
 
@@ -44,15 +48,25 @@ class MainScreen : BaseScreen() {
     }
 
     fun assertHamburgerBtnDisplayedAndClickable() {
-        hamburgerBtn.check(matches(allOf(isClickable(), isDisplayed())))
+        hamburgerBtn
+            .check(
+                matches(
+                    allOf(
+                        isClickable(), isDisplayed()
+                    )
+                )
+            )
     }
 
     fun assertLoginBtnDisplayedAndClickable() {
-        loginBtn.check(matches(
-                allOf(
+        loginBtn
+            .check(
+                matches(
+                    allOf(
                         isDisplayed(), withText(R.string.login_login), isClickable()
+                    )
                 )
-        ))
+            )
     }
 
     fun assertAddChannelBtnDisplayed() {
@@ -73,9 +87,5 @@ class MainScreen : BaseScreen() {
 
     fun assertThatLoggedOut() {
         loginBtn.check(matches(allOf(withText("LOGIN"), isClickable())))
-    }
-
-    fun assertNewChannelCreated(channelName: String) {
-
     }
 }

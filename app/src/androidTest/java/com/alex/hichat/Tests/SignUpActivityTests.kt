@@ -8,13 +8,14 @@ import org.junit.runner.RunWith
 import android.support.test.espresso.Espresso
 import android.support.test.espresso.IdlingRegistry
 import com.alex.hichat.Controller.MainActivity
+import com.alex.hichat.Screens.CreateUserValidation
 import com.alex.hichat.Screens.LoggedInScreen
 import com.alex.hichat.Screens.MainScreen
+import com.alex.hichat.Screens.SignUpScreen
 import com.alex.hichat.Services.IdlingResourceHolder
 import com.alex.hichat.Utilities.ToastPopUps
 import org.junit.After
 import org.junit.Before
-import java.lang.Thread.sleep
 
 @RunWith(AndroidJUnit4::class)
 class SignUpActivityTests {
@@ -23,7 +24,7 @@ class SignUpActivityTests {
     var myActivityTestRule = ActivityTestRule(MainActivity::class.java)
 
     private var randomPassword = Math.random().toFloat()
-    private val newUserName = "zorro"
+    private val newUserName = "Zorro"
     private var newUserEmail = "zorro$randomPassword@gmail.com"
     private val newUserPassword = "123456"
 
@@ -49,9 +50,9 @@ class SignUpActivityTests {
         Espresso.closeSoftKeyboard()
         signUpScreen.generateNewAvatar(3)
         signUpScreen.generateBackgroundColor(3)
-        signUpScreen.clickOnCreateUserBtn()
+        val loggedInScreen = signUpScreen.clickOnCreateUserBtn(CreateUserValidation.VALID_USER)
+            as LoggedInScreen
 //        sleep(6000)
-        val loggedInScreen = LoggedInScreen()
         loggedInScreen.assertUserEmailTest(newUserEmail)
         loggedInScreen.clickOnLogoutBtn()
     }
@@ -62,10 +63,10 @@ class SignUpActivityTests {
         mainScreen.clickOnHamburgerBtnMain()
         val loginScreen = mainScreen.clickOnLoginHeaderBtn()
         val signUpScreen = loginScreen.clickOnSignUpHereBtn()
-        signUpScreen.clickOnCreateUserBtn()
+        signUpScreen.clickOnCreateUserBtn(CreateUserValidation.INVALID_USER) as SignUpScreen
 //        sleep(700)
         val toastPopUps = ToastPopUps()
-        toastPopUps.assertToastSignUpAllFieldsFilledIn(myActivityTestRule)
+        toastPopUps.assertCreateUserToastAllFieldsShouldBeFilledAppeared(myActivityTestRule)
     }
 
     @Test

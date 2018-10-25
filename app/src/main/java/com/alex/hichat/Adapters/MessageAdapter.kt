@@ -13,9 +13,12 @@ import com.alex.hichat.R
 import com.alex.hichat.Services.UserDataService
 import java.text.ParseException
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Locale
+import java.util.Date
+import java.util.TimeZone
 
-class MessageAdapter(val context: Context, val messages: ArrayList<Message>) : RecyclerView.Adapter<MessageAdapter.ViewHolder>() {
+class MessageAdapter(val context: Context, val messages: ArrayList<Message>)
+    : RecyclerView.Adapter<MessageAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.message_list_view, parent, false)
@@ -37,16 +40,18 @@ class MessageAdapter(val context: Context, val messages: ArrayList<Message>) : R
         val messageBody = itemView?.findViewById<TextView>(R.id.messageBodyLbl)
 
         fun bindMessage(context: Context, message: Message) {
-            val resourceId = context.resources.getIdentifier(message.userAvatar, "drawable", context.packageName)
+            val resourceId = context.resources.getIdentifier(
+                message.userAvatar, "drawable", context.packageName)
             userImage?.setImageResource(resourceId)
-            userImage?.setBackgroundColor(UserDataService.returnAvatarColor(message.userAvatarColor))
+            userImage?.setBackgroundColor(
+                UserDataService.returnAvatarColor(message.userAvatarColor))
             userName?.text = message.userName
             timeStamp?.text = returnDateString(message.timeStamp)
             messageBody?.text = message.message
         }
 
         // used SimpleDateFormat API. Check developer.andoroid.com for the date patterns
-        fun returnDateString(isoString: String) : String {
+        fun returnDateString(isoString: String): String {
 
             // 1. 2018-10-16T01:16:13.858Z this pattern comes from mongoDB
             // 2. Then we should convert date to Monday 4:35 PM
@@ -55,7 +60,7 @@ class MessageAdapter(val context: Context, val messages: ArrayList<Message>) : R
             // Then we convert our pattern to UTC(World's time standard) time
             isoFormatter.timeZone = TimeZone.getTimeZone("UTC")
             var convertedDate = Date()
-            //when converts to object exception may occur so we need try catch
+            // when converts to object exception may occur so we need try catch
             try {
                 // getting from a String to a Date Object
                 convertedDate = isoFormatter.parse(isoString)

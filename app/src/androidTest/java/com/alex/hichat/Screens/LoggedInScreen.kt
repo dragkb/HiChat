@@ -9,9 +9,11 @@ import android.support.test.espresso.assertion.ViewAssertions.matches
 import android.support.test.espresso.matcher.ViewMatchers
 import android.support.test.espresso.matcher.ViewMatchers.isClickable
 import android.support.test.espresso.matcher.ViewMatchers.isDisplayed
+import android.support.test.espresso.matcher.ViewMatchers.withChild
 import android.support.test.espresso.matcher.ViewMatchers.withId
 import android.support.test.espresso.matcher.ViewMatchers.withText
 import com.alex.hichat.R
+import com.alex.hichat.Tests.AddChannelDialogTests
 import org.hamcrest.CoreMatchers.allOf
 
 class LoggedInScreen : BaseScreen() {
@@ -33,6 +35,10 @@ class LoggedInScreen : BaseScreen() {
 
     override val uniqueView: ViewInteraction
         get() = logoutBtn
+
+    private val channelListView: ViewInteraction
+        get() = onView(withId(R.id.channel_list))
+//        get() = onData(anything()).inAdapterView(withId(R.id.channel_list))
 
     init {
         uniqueView.check(matches(isDisplayed()))
@@ -73,5 +79,12 @@ class LoggedInScreen : BaseScreen() {
 
     fun assertThatLoggedIn() {
         userName.check(matches(isDisplayed()))
+    }
+
+    fun assertNewChannelSuccessfullyCreated() {
+        // Getting val channelName from AddChannelDialogTests class which is dynamically changes every test
+        val channelNameText = AddChannelDialogTests()
+        channelListView.check(matches(withChild(withText(channelNameText.channelName))))
+//        channelListView?.check(matches(withChild(withText(channelNameText.channelName))))
     }
 }

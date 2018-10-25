@@ -5,8 +5,14 @@ import android.support.test.espresso.ViewInteraction
 import android.support.test.espresso.action.ViewActions.click
 import android.support.test.espresso.action.ViewActions.typeText
 import android.support.test.espresso.assertion.ViewAssertions.matches
-import android.support.test.espresso.matcher.ViewMatchers.*
+import android.support.test.espresso.matcher.ViewMatchers.withId
+import android.support.test.espresso.matcher.ViewMatchers.isDisplayed
 import com.alex.hichat.R
+
+enum class UserClickValidation {
+    VALID_USER,
+    INVALID_USER
+}
 
 class LoginScreen : BaseScreen() {
 
@@ -37,13 +43,12 @@ class LoginScreen : BaseScreen() {
         loginPasswordTxtField.perform(typeText(password))
     }
 
-    fun clickOnLoginBtn(): LoggedInScreen {
+    fun clickOnLoginBtn(user: UserClickValidation): Any {
         loginLoginBtn.perform(click())
-        return LoggedInScreen()
-    }
-
-    fun clickOnLoginBtnForToast() {
-        loginLoginBtn.perform(click())
+        when (user) {
+            UserClickValidation.VALID_USER -> return LoggedInScreen()
+            UserClickValidation.INVALID_USER -> return LoginScreen()
+        }
     }
 
     fun clickOnSignUpHereBtn(): SignUpScreen {

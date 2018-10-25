@@ -44,7 +44,8 @@ class MainActivity : AppCompatActivity() {
     var selectedChannel: Channel? = null
 
     private fun setupAdapters() {
-        channelAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, MessageService.channels)
+        channelAdapter = ArrayAdapter(
+            this, android.R.layout.simple_list_item_1, MessageService.channels)
         channel_list.adapter = channelAdapter
 
         messageAdapter = MessageAdapter(this, MessageService.messages)
@@ -67,7 +68,8 @@ class MainActivity : AppCompatActivity() {
         socket.on("messageCreated", onNewMessage)
 
         val toggle = ActionBarDrawerToggle(
-                this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
+                this, drawer_layout, toolbar,
+            R.string.navigation_drawer_open, R.string.navigation_drawer_close)
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
 
@@ -101,10 +103,12 @@ class MainActivity : AppCompatActivity() {
             if (App.sharedPrefs.isLoggedIn) {
                 userNameNavHeader.text = UserDataService.name
                 userEmailNavHeader.text = UserDataService.email
-                val resourceId = resources.getIdentifier(UserDataService.avatarName, "drawable", packageName)
+                val resourceId = resources.getIdentifier(
+                    UserDataService.avatarName, "drawable", packageName)
                 userImgNavHeader.setImageResource(resourceId)
                 // Changing the background color to the one which was picked by user
-                userImgNavHeader.setBackgroundColor(UserDataService.returnAvatarColor(UserDataService.avatarColor))
+                userImgNavHeader.setBackgroundColor(
+                    UserDataService.returnAvatarColor(UserDataService.avatarColor))
                 loginBtnNavHeader.text = "Logout"
 
                 // Downloading channels here
@@ -127,9 +131,9 @@ class MainActivity : AppCompatActivity() {
     fun updateWithChannel() {
         mainChannelName.text = "#${selectedChannel?.name}"
         // Download messages for channel
-        if(selectedChannel != null) {
+        if (selectedChannel != null) {
             MessageService.getMessages(selectedChannel!!.id) { complete ->
-                if(complete) {
+                if (complete) {
                     // update messages
                     messageAdapter.notifyDataSetChanged()
                     // if messages more than 1 then scroll to the last one (messageAdapter.itemCount - 1)
@@ -153,7 +157,7 @@ class MainActivity : AppCompatActivity() {
         // if login then we need to see logout and moved to activity after logout
         if (App.sharedPrefs.isLoggedIn) {
             UserDataService.logout()
-            //After logout reload data messages and channels
+            // After logout reload data messages and channels
             channelAdapter.notifyDataSetChanged()
             messageAdapter.notifyDataSetChanged()
             userNameNavHeader.text = ""
@@ -167,7 +171,6 @@ class MainActivity : AppCompatActivity() {
             val loginActivityIntent = Intent(this, LoginActivity::class.java)
             startActivity(loginActivityIntent)
         }
-
     }
 
     fun addChannelBtnClicked(view: View) {
@@ -178,8 +181,10 @@ class MainActivity : AppCompatActivity() {
             builder.setView(dialogView)
                     .setPositiveButton("Add") { _, _ ->
                         // perform some logic when clicked
-                        val nameTextField = dialogView.findViewById<TextView>(R.id.addChannelNameTxt)
-                        val descTextField = dialogView.findViewById<TextView>(R.id.addChannelDescTxt)
+                        val nameTextField = dialogView.findViewById<TextView>(
+                            R.id.addChannelNameTxt)
+                        val descTextField = dialogView.findViewById<TextView>(
+                            R.id.addChannelDescTxt)
 
                         // channelName needs to create an emit for socket channel
                         val channelName = nameTextField.text.toString()
@@ -188,10 +193,12 @@ class MainActivity : AppCompatActivity() {
 
                         // Create a channel with the channel name and description
                         // Socektio - emit() method sending info from out client to API
-                        if(channelName != "" && channelDesc != "") {
+                        if (channelName != "" && channelDesc != "") {
                             socket.emit("newChannel", channelName, channelDesc)
                         } else
-                            Toast.makeText(this, R.string.toast_dialog_message, Toast.LENGTH_LONG).show()
+                            Toast
+                                .makeText(this, R.string.toast_dialog_message, Toast.LENGTH_LONG)
+                                .show()
                     }
                     .setNegativeButton("Cancel") { _, _ ->
                         // Cancel and close the dialog
@@ -202,7 +209,7 @@ class MainActivity : AppCompatActivity() {
 
     // Listens for emit and store data to Channel class. Saves it to Data base and output to Log if created
     private val onNewChannel = Emitter.Listener { args ->
-        if(App.sharedPrefs.isLoggedIn) {
+        if (App.sharedPrefs.isLoggedIn) {
             runOnUiThread {
                 // Back from main thread to UiThread and update out listView
                 val channelName = args[0] as String
@@ -222,19 +229,21 @@ class MainActivity : AppCompatActivity() {
 
     // Listens for emit to API.
     private val onNewMessage = Emitter.Listener { args ->
-        if(App.sharedPrefs.isLoggedIn) {
+        if (App.sharedPrefs.isLoggedIn) {
             runOnUiThread {
                 val channelId = args[2] as String
                 if (channelId == selectedChannel?.id) {
                     val msgBody = args[0] as String
-                    // val msgId = args[1] as String // We skipped this because it's never used in the code
+                    // We skipped args[1] and args[2] because it's never used in the code
                     val userName = args[3] as String
                     val userAvatar = args[4] as String
                     val userAvatarColor = args[5] as String
                     val id = args[6] as String
                     val timeStamp = args[7] as String
 
-                    val newMessage = Message(msgBody, userName, channelId, userAvatar, userAvatarColor, id, timeStamp)
+                    val newMessage = Message(
+                        msgBody, userName, channelId,
+                        userAvatar, userAvatarColor, id, timeStamp)
                     // Storing message to an ArrayList
                     MessageService.messages.add(newMessage)
                     messageAdapter.notifyDataSetChanged()
