@@ -46,7 +46,6 @@ class LogInActivityTests {
         loginScreen.typePassword(validUserPassword)
         val loggedInScreen = loginScreen.clickOnLoginBtn(UserClickValidation.VALID_USER)
             as LoggedInScreen
-//        sleep(3500)
         loggedInScreen.assertThatLoggedIn()
         loggedInScreen.clickOnLogoutBtn()
     }
@@ -60,7 +59,6 @@ class LogInActivityTests {
         loginScreen.typePassword(validUserPassword)
         val loggedInScreen = loginScreen.clickOnLoginBtn(UserClickValidation.VALID_USER)
             as LoggedInScreen
-//        sleep(2000)
         loggedInScreen.clickOnLogoutBtn()
         mainScreen.assertThatLoggedOut()
     }
@@ -74,7 +72,6 @@ class LogInActivityTests {
         loginScreen.typePassword(invalidUserPassword)
         loginScreen.clickOnLoginBtn(UserClickValidation.INVALID_USER)
             as LoginScreen
-//        sleep(700)
         val toastsPopUps = ToastPopUps()
         toastsPopUps.assertLoginToastSomethingWrong(myActivityTestRule)
     }
@@ -87,7 +84,6 @@ class LogInActivityTests {
         loginScreen.typeEmail(validUserEmail)
         loginScreen.clickOnLoginBtn(UserClickValidation.INVALID_USER)
             as LoginScreen
-//        sleep(700)
         val toastsPopUps = ToastPopUps()
         toastsPopUps.assertLoginToastBothFieldsWrong(myActivityTestRule)
     }

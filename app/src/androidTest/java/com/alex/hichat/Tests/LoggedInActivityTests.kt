@@ -36,7 +36,7 @@ class LoggedInActivityTests {
         "I think you should hire Alex, he is right next to you!" +
         " Don't miss your chance..."
 
-        @Before
+    @Before
     fun idlingResourceRegister() {
         IdlingRegistry.getInstance().register(IdlingResourceHolder.networkIdlingResource)
     }
@@ -262,7 +262,7 @@ class LoggedInActivityTests {
     }
 
     @Test
-    fun assertMessageSentToNewChannelCreatedTest() {
+    fun assertMessageSentToNewChannelJustCreatedTest() {
         val mainScreen = MainScreen()
         mainScreen.clickOnHamburgerBtnMain()
         val loginScreen = mainScreen.clickOnLoginHeaderBtn()
@@ -299,6 +299,4 @@ class LoggedInActivityTests {
         mainScreen.clickOnHamburgerBtnMain()
         loggedInScreen.clickOnLogoutBtn()
     }
-
-
 }

@@ -52,7 +52,6 @@ class SignUpActivityTests {
         signUpScreen.generateBackgroundColor(3)
         val loggedInScreen = signUpScreen.clickOnCreateUserBtn(CreateUserValidation.VALID_USER)
             as LoggedInScreen
-//        sleep(6000)
         loggedInScreen.assertUserEmailTest(newUserEmail)
         loggedInScreen.clickOnLogoutBtn()
     }
@@ -64,7 +63,6 @@ class SignUpActivityTests {
         val loginScreen = mainScreen.clickOnLoginHeaderBtn()
         val signUpScreen = loginScreen.clickOnSignUpHereBtn()
         signUpScreen.clickOnCreateUserBtn(CreateUserValidation.INVALID_USER) as SignUpScreen
-//        sleep(700)
         val toastPopUps = ToastPopUps()
         toastPopUps.assertCreateUserToastAllFieldsShouldBeFilled(myActivityTestRule)
     }
