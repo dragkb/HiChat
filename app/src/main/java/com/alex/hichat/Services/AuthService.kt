@@ -100,13 +100,7 @@ object AuthService {
 //        IdlingResourceHolder.networkIdlingResource.decrement()
     }
 
-    fun createUser(
-        name: String,
-        email: String,
-        avatarName: String,
-        avatarColor: String,
-        complete: (Boolean) -> Unit
-    ) {
+    fun createUser(name: String, email: String, avatarName: String, avatarColor: String, complete: (Boolean) -> Unit) {
         // Increment idling resource
         IdlingResourceHolder.networkIdlingResource.increment()
 

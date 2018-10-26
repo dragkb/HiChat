@@ -76,7 +76,7 @@ class LogInActivityTests {
             as LoginScreen
 //        sleep(700)
         val toastsPopUps = ToastPopUps()
-        toastsPopUps.assertLoginToastSomethingWrongAppeared(myActivityTestRule)
+        toastsPopUps.assertLoginToastSomethingWrong(myActivityTestRule)
     }
 
     @Test
@@ -89,6 +89,6 @@ class LogInActivityTests {
             as LoginScreen
 //        sleep(700)
         val toastsPopUps = ToastPopUps()
-        toastsPopUps.assertLoginToastBothFieldsWrongAppeared(myActivityTestRule)
+        toastsPopUps.assertLoginToastBothFieldsWrong(myActivityTestRule)
     }
 }

@@ -27,7 +27,7 @@ class ToastPopUps {
     private val toastDialogMessage = onView(
         withText(R.string.toast_dialog_message))
 
-    fun assertLoginToastSomethingWrongAppeared(myActivityTestRule: Any) {
+    fun assertLoginToastSomethingWrong(myActivityTestRule: Any) {
         when (myActivityTestRule) {
             mainActivityTestRule -> toastSomethingWrong
                 .inRoot(withDecorView(not(mainActivityTestRule.activity.window.decorView)))
@@ -41,7 +41,7 @@ class ToastPopUps {
         }
     }
 
-    fun assertLoginToastBothFieldsWrongAppeared(myActivityTestRule: Any) {
+    fun assertLoginToastBothFieldsWrong(myActivityTestRule: Any) {
         when (myActivityTestRule) {
             mainActivityTestRule -> toastBothFieldsWrong
                 .inRoot(withDecorView(not(mainActivityTestRule.activity.window.decorView)))
@@ -55,7 +55,7 @@ class ToastPopUps {
         }
     }
 
-    fun assertCreateUserToastAllFieldsShouldBeFilledAppeared(myActivityTestRule: Any) {
+    fun assertCreateUserToastAllFieldsShouldBeFilled(myActivityTestRule: Any) {
         when (myActivityTestRule) {
             mainActivityTestRule -> toastAllThreeFieldsTyped
                 .inRoot(withDecorView(not(mainActivityTestRule.activity.window.decorView)))
@@ -69,7 +69,7 @@ class ToastPopUps {
         }
     }
 
-    fun assertDialogToastNoChannelCreatedWithEmptyFieldsAppeared(myActivityTestRule: Any) {
+    fun assertDialogToastNoChannelCreatedWithEmptyFields(myActivityTestRule: Any) {
         when (myActivityTestRule) {
             mainActivityTestRule -> toastDialogMessage
                 .inRoot(withDecorView(not(mainActivityTestRule.activity.window.decorView)))

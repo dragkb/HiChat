@@ -49,9 +49,7 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
         } else {
-            Toast.makeText(
-                this, R.string.toast_fill_both_email_password_fields, Toast.LENGTH_LONG)
-                .show()
+            Toast.makeText(this, R.string.toast_fill_both_email_password_fields, Toast.LENGTH_LONG).show()
             enableSpinner(false)
         }
     }

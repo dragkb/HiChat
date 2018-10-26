@@ -66,7 +66,7 @@ class SignUpActivityTests {
         signUpScreen.clickOnCreateUserBtn(CreateUserValidation.INVALID_USER) as SignUpScreen
 //        sleep(700)
         val toastPopUps = ToastPopUps()
-        toastPopUps.assertCreateUserToastAllFieldsShouldBeFilledAppeared(myActivityTestRule)
+        toastPopUps.assertCreateUserToastAllFieldsShouldBeFilled(myActivityTestRule)
     }
 
     @Test
