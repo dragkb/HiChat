@@ -8,6 +8,8 @@ import android.support.test.espresso.action.ViewActions.typeText
 import android.support.test.espresso.assertion.PositionAssertions.isCompletelyAbove
 import android.support.test.espresso.assertion.PositionAssertions.isCompletelyLeftOf
 import android.support.test.espresso.assertion.ViewAssertions.matches
+import android.support.test.espresso.contrib.RecyclerViewActions
+import android.support.test.espresso.intent.matcher.BundleMatchers.hasEntry
 import android.support.test.espresso.matcher.ViewMatchers
 import android.support.test.espresso.matcher.ViewMatchers.hasDescendant
 import android.support.test.espresso.matcher.ViewMatchers.hasSibling
@@ -18,6 +20,7 @@ import android.support.test.espresso.matcher.ViewMatchers.isDisplayed
 import android.support.test.espresso.matcher.ViewMatchers.withClassName
 import android.support.test.espresso.matcher.ViewMatchers.withId
 import android.support.test.espresso.matcher.ViewMatchers.withText
+import android.support.v7.widget.RecyclerView
 import android.widget.LinearLayout
 import android.widget.ListView
 import com.alex.hichat.R
@@ -155,12 +158,6 @@ class LoggedInScreen : BaseScreen() {
             allOf(
                 withText(channel), isDescendantOfA(withId(R.id.channel_list)))
         ).perform(click())
-
-
-//        onData(anything())
-//            .inAdapterView(isDescendantOfA(withId(R.id.channel_list)))
-//            .check(matches(withText(channel)))
-//            .perform(click())
     }
 
     fun assertChannelRoomIsClicked(channelRoom: String) {
@@ -184,5 +181,29 @@ class LoggedInScreen : BaseScreen() {
             )
         )
     }
-
+//
+//    // Click on one of the rows.
+//    onRow(TEXT_ITEM_30).onChildView(withId(R.id.rowContentTextView)).perform(click());
+//
+//    // Click on the toggle button, in a different row.
+//    onRow(TEXT_ITEM_60).onChildView(withId(R.id.rowToggleButton)).perform(click());
+//
+//    // Check that the activity didn't detect the click on the first column.
+//    onView(ViewMatchers.withId(R.id.selection_row_value))
+//    .check(matches(withText(TEXT_ITEM_30_SELECTED)));
+//}
+//
+///**
+// * Uses {@link Espresso#onData(org.hamcrest.Matcher)} to get a reference to a specific row.
+// * <p>
+// * Note: A custom matcher can be used to match the content and have more readable code.
+// * See the Custom Matcher Sample.
+// * </p>
+// *
+// * @param str the content of the field
+// * @return a {@link DataInteraction} referencing the row
+// */
+//private static DataInteraction onRow(String str) {
+//    return onData(hasEntry(equalTo(LongListActivity.ROW_TEXT), is(str)));
+//}
 }

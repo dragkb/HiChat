@@ -95,9 +95,6 @@ object AuthService {
         }
 
         App.sharedPrefs.requestQueue.add(loginRequest)
-
-        // Decrement Idling resource
-//        IdlingResourceHolder.networkIdlingResource.decrement()
     }
 
     fun createUser(name: String, email: String, avatarName: String, avatarColor: String, complete: (Boolean) -> Unit) {
