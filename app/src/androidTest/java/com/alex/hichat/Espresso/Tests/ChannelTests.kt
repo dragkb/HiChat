@@ -64,7 +64,7 @@ class ChannelTests {
     fun assertThatChannelIsClicked() {
         TasksMainLogin.loginMain()
         val loggedInScreen = TasksUserLogin.validLogin(userLala)
-        loggedInScreen.clickOnChannelRoom(channelName)
+        loggedInScreen.clickOnChannelRoomByIndex(0)
         loggedInScreen.assertChannelRoomIsClicked(channelName)
         val mainScreen = MainScreen()
         mainScreen.clickOnHamburgerBtnMain()

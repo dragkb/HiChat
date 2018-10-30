@@ -4,6 +4,7 @@ import android.support.test.espresso.Espresso
 import android.support.test.espresso.Espresso.onView
 import android.support.test.espresso.ViewInteraction
 import android.support.test.espresso.action.ViewActions.click
+import android.support.test.espresso.action.ViewActions.replaceText
 import android.support.test.espresso.action.ViewActions.typeText
 import android.support.test.espresso.assertion.ViewAssertions.matches
 import android.support.test.espresso.matcher.ViewMatchers.withId
@@ -51,15 +52,15 @@ class SignUpScreen : BaseScreen() {
     }
 
     fun typeNewName(name: String) {
-        newUserNameTxt.perform(typeText(name))
+        newUserNameTxt.perform(replaceText(name))
     }
 
     fun typeNewEmail(email: String) {
-        newUserEmailTxt.perform(typeText(email))
+        newUserEmailTxt.perform(replaceText(email))
     }
 
     fun typeNewPassword(password: String) {
-        newUserPasswordTxt.perform(typeText(password))
+        newUserPasswordTxt.perform(replaceText(password))
         Espresso.closeSoftKeyboard()
     }
 

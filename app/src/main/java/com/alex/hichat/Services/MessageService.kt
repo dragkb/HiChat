@@ -4,6 +4,7 @@ import android.util.Log
 import com.alex.hichat.Controller.App
 import com.alex.hichat.Model.Channel
 import com.alex.hichat.Model.Message
+import com.alex.hichat.Utilities.IdlingResourceHolder
 import com.alex.hichat.Utilities.URL_GET_CHANNELS
 import com.alex.hichat.Utilities.URL_GET_MESSAGES
 import com.android.volley.Response
@@ -19,6 +20,8 @@ object MessageService {
 
     // JSON request for find all channels
     fun getChannels(complete: (Boolean) -> Unit) {
+        // Idling resource increment()
+        IdlingResourceHolder.networkIdlingResource.increment()
         val channelsRequest = object : JsonArrayRequest(
             Method.GET, URL_GET_CHANNELS, null, Response.Listener { response ->
             // Looping through array of JSON objects to get all channels available
@@ -35,10 +38,17 @@ object MessageService {
                 }
             } catch (e: JSONException) {
                 Log.d("JSON", "EXC " + e.localizedMessage)
+            } finally {
+                // Idling resource decrement()
+                IdlingResourceHolder.networkIdlingResource.decrement()
             }
         }, Response.ErrorListener { error ->
-            Log.d("ERROR", "Could not retrieve channels")
-            complete(false)
+                try {
+                    Log.d("ERROR", "Could not retrieve channels")
+                    complete(false)
+                } finally {
+                    IdlingResourceHolder.networkIdlingResource.decrement()
+                }
         }) {
 
             override fun getBodyContentType(): String {
@@ -58,6 +68,8 @@ object MessageService {
     fun getMessages(channelId: String, complete: (Boolean) -> Unit) {
         // Unique URL for specific channel
         val url = "$URL_GET_MESSAGES$channelId"
+        // Idling resource increment()
+        IdlingResourceHolder.networkIdlingResource.increment()
         val messagesRequest = object : JsonArrayRequest(
             Method.GET, url, null, Response.Listener { response ->
             clearMessages() // Clear messages before type in
@@ -82,10 +94,18 @@ object MessageService {
             } catch (e: JSONException) {
                 Log.d("JSON", "EXC" + e.localizedMessage)
                 complete(false)
+            } finally {
+                // Idling resource decrement()
+                IdlingResourceHolder.networkIdlingResource.decrement()
             }
         }, Response.ErrorListener { error ->
-            Log.d("ERROR", "Could not retrieve message")
-            complete(false)
+                try {
+                    Log.d("ERROR", "Could not retrieve message")
+                    complete(false)
+                } finally {
+                    // Idling resource decrement()
+                    IdlingResourceHolder.networkIdlingResource.decrement()
+                }
         }) {
             override fun getBodyContentType(): String {
                 return "application/json; charset=utf-8"

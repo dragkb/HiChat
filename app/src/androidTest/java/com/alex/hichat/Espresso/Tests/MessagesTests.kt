@@ -8,7 +8,6 @@ import com.alex.hichat.Espresso.Model.OldUser
 import com.alex.hichat.Espresso.Screens.MainScreen
 import com.alex.hichat.Utilities.IdlingResourceHolder
 import com.alex.hichat.Espresso.Tasks.TasksMainLogin
-import com.alex.hichat.Espresso.Tasks.TasksSendMessage
 import com.alex.hichat.Espresso.Tasks.TasksUserLogin
 import org.junit.After
 import org.junit.Before
@@ -25,12 +24,11 @@ class MessagesTests {
     private val userVijay = OldUser("vijay@space.com", "123456")
     private val userBill = OldUser("bill@smile.com", "123456")
     private val userLala = OldUser("lala@gmail.com", "123456")
-    private val channelNameGenerator = "Test - ${(Math.random() * 100000).toInt()}"
+    private val randomNumberGen = (Math.random() * 10000).toInt()
+    private val channelNameGenerator = "Test - $randomNumberGen"
     private val channelDesc = "test"
-    private val channelName = "Cool API"
-
-    private val testMessageTxt = "I want to be a plumber."
-    private val answerMessageText = "What if I could eat 200 sausages for 5 min??? Hmm..."
+    private val testMessageTxt = "I want to live $randomNumberGen years."
+    private val answerMessageText = "What if I could eat $randomNumberGen sausages for 5 min??? Hmm..."
     private val respondMessageText = "You would be pretty full. I think :)"
     private val conversationVijay = "What an amazing Demo!!! What do you think, Bill?"
     private val conversationBill = "Yeh, 100% agreed! Alex you are cool! Lala, what's up?"
@@ -49,13 +47,13 @@ class MessagesTests {
     }
 
     @Test
-    fun assertMessageSentTest() {
+    fun sendMessageTest() {
         val mainScreen = MainScreen()
         TasksMainLogin.loginMain()
         val loggedInScreen = TasksUserLogin.validLogin(userLala)
-        loggedInScreen.clickOnChannelRoom(channelName)
-        TasksSendMessage.sendMessage(testMessageTxt)
-        loggedInScreen.assertMessageHasSent(testMessageTxt)
+        loggedInScreen.clickOnChannelRoomByIndex(1)
+        loggedInScreen.typeNewMessage(testMessageTxt)
+        loggedInScreen.clickOnMessageSendBtn()
         mainScreen.clickOnHamburgerBtnMain()
         loggedInScreen.clickOnLogoutBtn()
     }
@@ -65,15 +63,17 @@ class MessagesTests {
         val mainScreen = MainScreen()
         TasksMainLogin.loginMain()
         val loggedInScreen = TasksUserLogin.validLogin(userLala)
-        loggedInScreen.clickOnChannelRoom(channelName)
-        TasksSendMessage.sendMessage(answerMessageText)
+        loggedInScreen.clickOnChannelRoomByIndex(0)
+        loggedInScreen.typeNewMessage(answerMessageText)
+        loggedInScreen.clickOnMessageSendBtn()
         mainScreen.clickOnHamburgerBtnMain()
         loggedInScreen.clickOnLogoutBtn()
         mainScreen.clickOnLoginHeaderBtn()
         TasksUserLogin.validLogin(userBill)
-        loggedInScreen.clickOnChannelRoom(channelName)
+        loggedInScreen.clickOnChannelRoomByIndex(0)
         loggedInScreen.assertMessageHasSent(answerMessageText)
-        TasksSendMessage.sendMessage(respondMessageText)
+        loggedInScreen.typeNewMessage(respondMessageText)
+        loggedInScreen.clickOnMessageSendBtn()
         mainScreen.clickOnHamburgerBtnMain()
         loggedInScreen.clickOnLogoutBtn()
     }
@@ -87,22 +87,25 @@ class MessagesTests {
         loggedInScreen.typeDialogChannelName(channelNameGenerator)
         loggedInScreen.typeDialogChannelDescription(channelDesc)
         loggedInScreen.clickOnDialogAddBtn()
-        loggedInScreen.clickOnChannelRoom(channelNameGenerator)
-        TasksSendMessage.sendMessage(conversationVijay)
+        loggedInScreen.clickOnLastChannelRoom()
+        loggedInScreen.typeNewMessage(conversationVijay)
+        loggedInScreen.clickOnMessageSendBtn()
         mainScreen.clickOnHamburgerBtnMain()
         loggedInScreen.clickOnLogoutBtn()
         mainScreen.clickOnLoginHeaderBtn()
         TasksUserLogin.validLogin(userBill)
-        loggedInScreen.clickOnChannelRoom(channelNameGenerator)
+        loggedInScreen.clickOnLastChannelRoom()
         loggedInScreen.assertMessageHasSent(conversationVijay)
-        TasksSendMessage.sendMessage(conversationBill)
+        loggedInScreen.typeNewMessage(conversationBill)
+        loggedInScreen.clickOnMessageSendBtn()
         mainScreen.clickOnHamburgerBtnMain()
         loggedInScreen.clickOnLogoutBtn()
         mainScreen.clickOnLoginHeaderBtn()
         TasksUserLogin.validLogin(userLala)
-        loggedInScreen.clickOnChannelRoom(channelNameGenerator)
+        loggedInScreen.clickOnLastChannelRoom()
         loggedInScreen.assertMessageHasSent(conversationBill)
-        TasksSendMessage.sendMessage(conversationLala)
+        loggedInScreen.typeNewMessage(conversationLala)
+        loggedInScreen.clickOnMessageSendBtn()
         mainScreen.clickOnHamburgerBtnMain()
         loggedInScreen.clickOnLogoutBtn()
     }

@@ -3,6 +3,7 @@ package com.alex.hichat.Espresso.Screens
 import android.support.test.espresso.Espresso.onView
 import android.support.test.espresso.ViewInteraction
 import android.support.test.espresso.action.ViewActions.click
+import android.support.test.espresso.action.ViewActions.replaceText
 import android.support.test.espresso.action.ViewActions.typeText
 import android.support.test.espresso.assertion.ViewAssertions.matches
 import android.support.test.espresso.matcher.ViewMatchers.withId
@@ -36,11 +37,11 @@ class LoginScreen : BaseScreen() {
     }
 
     fun typeEmail(email: String) {
-        loginEmailTxtField.perform(typeText(email))
+        loginEmailTxtField.perform(replaceText(email))
     }
 
     fun typePassword(password: String) {
-        loginPasswordTxtField.perform(typeText(password))
+        loginPasswordTxtField.perform(replaceText(password))
     }
 
     fun clickOnLoginBtn(user: UserClickValidation): Any {
