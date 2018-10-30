@@ -1,4 +1,4 @@
-package com.alex.hichat.Services
+package com.alex.hichat.Utilities
 
 import android.support.test.espresso.idling.CountingIdlingResource
 

@@ -15,6 +15,11 @@ buildscript {
     }
 }
 
+buildscript {
+    dependencies {
+        classpath 'com.shazam.fork:fork-gradle-plugin:3.6.0'
+    }
+}
 allprojects {
     repositories {
         google()
