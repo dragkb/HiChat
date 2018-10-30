@@ -1,7 +1,7 @@
-package com.alex.hichat.Tasks
+package com.alex.hichat.Espresso.Tasks
 
-import com.alex.hichat.Screens.LoginScreen
-import com.alex.hichat.Screens.MainScreen
+import com.alex.hichat.Espresso.Screens.LoginScreen
+import com.alex.hichat.Espresso.Screens.MainScreen
 
 object TasksMainLogin {
 

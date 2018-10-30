@@ -1,9 +1,9 @@
-package com.alex.hichat.Tasks
+package com.alex.hichat.Espresso.Tasks
 
-import com.alex.hichat.Model.NewUser
-import com.alex.hichat.Screens.CreateUserValidation
-import com.alex.hichat.Screens.LoggedInScreen
-import com.alex.hichat.Screens.SignUpScreen
+import com.alex.hichat.Espresso.Model.NewUser
+import com.alex.hichat.Espresso.Screens.CreateUserValidation
+import com.alex.hichat.Espresso.Screens.LoggedInScreen
+import com.alex.hichat.Espresso.Screens.SignUpScreen
 
 object TasksCreateUser {
 

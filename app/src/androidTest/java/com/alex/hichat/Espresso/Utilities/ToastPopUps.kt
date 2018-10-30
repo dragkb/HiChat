@@ -1,4 +1,4 @@
-package com.alex.hichat.Utilities
+package com.alex.hichat.Espresso.Utilities
 
 import android.support.test.espresso.Espresso.onView
 import android.support.test.espresso.assertion.ViewAssertions.matches

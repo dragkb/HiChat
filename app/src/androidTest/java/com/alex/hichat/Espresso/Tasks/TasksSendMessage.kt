@@ -1,6 +1,6 @@
-package com.alex.hichat.Tasks
+package com.alex.hichat.Espresso.Tasks
 
-import com.alex.hichat.Screens.LoggedInScreen
+import com.alex.hichat.Espresso.Screens.LoggedInScreen
 
 object TasksSendMessage {
 

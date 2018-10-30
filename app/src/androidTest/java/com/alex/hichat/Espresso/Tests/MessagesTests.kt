@@ -1,21 +1,20 @@
-package com.alex.hichat.Tests
+package com.alex.hichat.Espresso.Tests
 
 import android.support.test.espresso.IdlingRegistry
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
 import com.alex.hichat.Controller.MainActivity
-import com.alex.hichat.Model.OldUser
-import com.alex.hichat.Screens.MainScreen
+import com.alex.hichat.Espresso.Model.OldUser
+import com.alex.hichat.Espresso.Screens.MainScreen
 import com.alex.hichat.Utilities.IdlingResourceHolder
-import com.alex.hichat.Tasks.TasksMainLogin
-import com.alex.hichat.Tasks.TasksSendMessage
-import com.alex.hichat.Tasks.TasksUserLogin
+import com.alex.hichat.Espresso.Tasks.TasksMainLogin
+import com.alex.hichat.Espresso.Tasks.TasksSendMessage
+import com.alex.hichat.Espresso.Tasks.TasksUserLogin
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import java.lang.Thread.sleep
 
 @RunWith(AndroidJUnit4::class)
 class MessagesTests {

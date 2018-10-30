@@ -1,15 +1,15 @@
-package com.alex.hichat.Tests
+package com.alex.hichat.Espresso.Tests
 
 import android.support.test.espresso.IdlingRegistry
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
 import com.alex.hichat.Controller.MainActivity
-import com.alex.hichat.Model.OldUser
-import com.alex.hichat.Screens.LoggedInScreen
-import com.alex.hichat.Screens.MainScreen
+import com.alex.hichat.Espresso.Model.OldUser
+import com.alex.hichat.Espresso.Screens.LoggedInScreen
+import com.alex.hichat.Espresso.Screens.MainScreen
 import com.alex.hichat.Utilities.IdlingResourceHolder
-import com.alex.hichat.Tasks.TasksMainLogin
-import com.alex.hichat.Tasks.TasksUserLogin
+import com.alex.hichat.Espresso.Tasks.TasksMainLogin
+import com.alex.hichat.Espresso.Tasks.TasksUserLogin
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule

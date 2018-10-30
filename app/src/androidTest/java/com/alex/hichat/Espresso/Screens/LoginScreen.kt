@@ -1,4 +1,4 @@
-package com.alex.hichat.Screens
+package com.alex.hichat.Espresso.Screens
 
 import android.support.test.espresso.Espresso.onView
 import android.support.test.espresso.ViewInteraction

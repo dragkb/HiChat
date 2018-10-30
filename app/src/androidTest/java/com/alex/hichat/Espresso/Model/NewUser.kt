@@ -1,4 +1,4 @@
-package com.alex.hichat.Model
+package com.alex.hichat.Espresso.Model
 
 class NewUser constructor(
     val userName: String,

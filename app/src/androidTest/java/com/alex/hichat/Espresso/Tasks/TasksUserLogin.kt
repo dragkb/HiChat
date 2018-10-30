@@ -1,9 +1,9 @@
-package com.alex.hichat.Tasks
+package com.alex.hichat.Espresso.Tasks
 
-import com.alex.hichat.Model.OldUser
-import com.alex.hichat.Screens.LoggedInScreen
-import com.alex.hichat.Screens.LoginScreen
-import com.alex.hichat.Screens.UserClickValidation
+import com.alex.hichat.Espresso.Model.OldUser
+import com.alex.hichat.Espresso.Screens.LoggedInScreen
+import com.alex.hichat.Espresso.Screens.LoginScreen
+import com.alex.hichat.Espresso.Screens.UserClickValidation
 
 object TasksUserLogin {
 

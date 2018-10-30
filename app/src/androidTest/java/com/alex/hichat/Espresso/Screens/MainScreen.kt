@@ -1,4 +1,4 @@
-package com.alex.hichat.Screens
+package com.alex.hichat.Espresso.Screens
 
 import android.support.test.espresso.Espresso.onView
 import android.support.test.espresso.ViewInteraction
@@ -11,6 +11,8 @@ import android.support.test.espresso.matcher.ViewMatchers.withContentDescription
 import android.support.test.espresso.matcher.ViewMatchers.isDisplayed
 import android.support.test.espresso.matcher.ViewMatchers.isClickable
 import android.support.test.espresso.matcher.ViewMatchers.withText
+import com.alex.hichat.Espresso.Screens.BaseScreen
+import com.alex.hichat.Espresso.Screens.LoginScreen
 import com.alex.hichat.R
 import org.hamcrest.CoreMatchers.allOf
 

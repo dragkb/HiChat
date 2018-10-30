@@ -1,4 +1,4 @@
-package com.alex.hichat.Tests
+package com.alex.hichat.Espresso.Tests
 
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
@@ -7,10 +7,10 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import android.support.test.espresso.IdlingRegistry
 import com.alex.hichat.Controller.MainActivity
-import com.alex.hichat.Model.NewUser
-import com.alex.hichat.Tasks.TasksCreateUser
+import com.alex.hichat.Espresso.Model.NewUser
+import com.alex.hichat.Espresso.Tasks.TasksCreateUser
 import com.alex.hichat.Utilities.IdlingResourceHolder
-import com.alex.hichat.Tasks.TasksMainLogin
+import com.alex.hichat.Espresso.Tasks.TasksMainLogin
 import org.junit.After
 import org.junit.Before
 
