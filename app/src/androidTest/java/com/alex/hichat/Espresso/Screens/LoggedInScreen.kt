@@ -1,40 +1,25 @@
 package com.alex.hichat.Espresso.Screens
 
-import android.support.test.espresso.AmbiguousViewMatcherException
-import android.support.test.espresso.DataInteraction
+
 import android.support.test.espresso.Espresso.onData
 import android.support.test.espresso.Espresso.onView
-import android.support.test.espresso.NoMatchingViewException
 import android.support.test.espresso.ViewInteraction
 import android.support.test.espresso.action.ViewActions.click
-import android.support.test.espresso.action.ViewActions.swipeUp
 import android.support.test.espresso.action.ViewActions.typeText
 import android.support.test.espresso.assertion.PositionAssertions.isCompletelyAbove
 import android.support.test.espresso.assertion.PositionAssertions.isCompletelyLeftOf
-import android.support.test.espresso.assertion.ViewAssertions.doesNotExist
 import android.support.test.espresso.assertion.ViewAssertions.matches
-import android.support.test.espresso.intent.matcher.BundleMatchers.hasEntry
 import android.support.test.espresso.matcher.ViewMatchers
-import android.support.test.espresso.matcher.ViewMatchers.hasDescendant
-import android.support.test.espresso.matcher.ViewMatchers.hasSibling
 import android.support.test.espresso.matcher.ViewMatchers.isClickable
-import android.support.test.espresso.matcher.ViewMatchers.isCompletelyDisplayed
 import android.support.test.espresso.matcher.ViewMatchers.isDescendantOfA
 import android.support.test.espresso.matcher.ViewMatchers.isDisplayed
 import android.support.test.espresso.matcher.ViewMatchers.withId
 import android.support.test.espresso.matcher.ViewMatchers.withText
-import android.support.v7.widget.RecyclerView
-import android.widget.ListView
-import com.alex.hichat.Controller.MainActivity
 import com.alex.hichat.Espresso.Utilities.CustomFailureHandler
 import com.alex.hichat.R
 import com.alex.hichat.Services.MessageService
-import org.hamcrest.CoreMatchers.`is`
-
 import org.hamcrest.CoreMatchers.allOf
 import org.hamcrest.CoreMatchers.anything
-import org.hamcrest.CoreMatchers.equalTo
-import org.hamcrest.CoreMatchers.instanceOf
 
 class LoggedInScreen : BaseScreen() {
 
@@ -52,9 +37,6 @@ class LoggedInScreen : BaseScreen() {
 
     private val logoutBtn: ViewInteraction
         get() = onView(withText("LOGOUT"))
-
-    private val channelListView: ViewInteraction
-        get() = onView(withId(R.id.channel_list))
 
     private val dialogChannelName: ViewInteraction
         get() = onView(withId(R.id.dialogChannelName))
@@ -79,9 +61,6 @@ class LoggedInScreen : BaseScreen() {
 
     private val messageSendBtn: ViewInteraction
         get() = onView(withId(R.id.sendMessageBtn))
-
-    private val messageRecyclerView: ViewInteraction
-        get() = onView(withId(R.id.messageListView))
 
     override val uniqueView: ViewInteraction
         get() = logoutBtn
@@ -170,33 +149,12 @@ class LoggedInScreen : BaseScreen() {
     }
 
     fun clickOnChannelRoomByIndex(index: Int) {
+        // onData(anything()).inAdapterView(withId(R.id.list_view)).atPosition(0).perform(click());
         onData(anything())
             .inAdapterView(withId(R.id.channel_list))
             .atPosition(MessageService.channels.indexOf(MessageService.channels[index]))
             .perform(click())
-
     }
-//        channelListView
-//            .withFailureHandler(CustomFailureHandler)
-//            .perform(swipeUp())
-
-//        try {
-//            onView(allOf(withText("#$channel"), isDescendantOfA(withId(R.id.channel_list))))
-//                .withFailureHandler(CustomFailureHandler)
-//                .perform(click())
-//        } catch (e: NoMatchingViewException) {
-//            channelListView
-//                .withFailureHandler(CustomFailureHandler)
-//                .perform(swipeUp())
-//            onView(allOf(withText("#$channel"), isDescendantOfA(withId(R.id.channel_list))))
-//                .withFailureHandler(CustomFailureHandler)
-//                .perform(click())
-//        }
-//    }
-
-//        onData(anything()).inAdapterView(withId(R.id.channel_list))
-//            .onChildView(withText("#$channel"))
-//            .perform(click())
 
     fun assertChannelRoomIsClicked(channel: String) {
         channelRoomName.check(matches(withText("#$channel")))
@@ -215,5 +173,4 @@ class LoggedInScreen : BaseScreen() {
     fun assertMessageHasSent(messageText: String) {
         onView(withText(messageText)).check(matches(isDisplayed()))
     }
-    // onData(anything()).inAdapterView(withId(R.id.list_view)).atPosition(0).perform(click());
 }

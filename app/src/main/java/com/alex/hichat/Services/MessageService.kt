@@ -1,5 +1,6 @@
 package com.alex.hichat.Services
 
+import android.support.annotation.VisibleForTesting
 import android.util.Log
 import com.alex.hichat.Controller.App
 import com.alex.hichat.Model.Channel
@@ -14,6 +15,7 @@ import org.json.JSONException
 object MessageService {
 
     // ArrayList for channels
+    @VisibleForTesting
     val channels = ArrayList<Channel>()
     // ArrayList for messages
     val messages = ArrayList<Message>()
