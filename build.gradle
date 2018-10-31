@@ -1,6 +1,19 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
+    repositories {
+        maven { url 'https://maven.fabric.io/public' }
+    }
+
+    dependencies {
+        // You can find the lastest version number here: https://docs.fabric.io/android/changelog.html#fabric-gradle-plugin
+        classpath 'io.fabric.tools:gradle:1.26.1'
+    }
+}
+
+
+
+buildscript {
     ext.kotlin_version = '1.2.71'
     repositories {
         google()

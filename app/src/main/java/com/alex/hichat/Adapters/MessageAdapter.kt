@@ -30,14 +30,14 @@ class MessageAdapter(val context: Context, val messages: ArrayList<Message>)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder?.bindMessage(context, messages[position])
+        holder.bindMessage(context, messages[position])
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val userImage = itemView?.findViewById<ImageView>(R.id.messageUserImg)
-        val timeStamp = itemView?.findViewById<TextView>(R.id.messageTimeStampLbl)
-        val userName = itemView?.findViewById<TextView>(R.id.messageUserNameLbl)
-        val messageBody = itemView?.findViewById<TextView>(R.id.messageBodyLbl)
+        val userImage = itemView.findViewById<ImageView>(R.id.messageUserImg)
+        val timeStamp = itemView.findViewById<TextView>(R.id.messageTimeStampLbl)
+        val userName = itemView.findViewById<TextView>(R.id.messageUserNameLbl)
+        val messageBody = itemView.findViewById<TextView>(R.id.messageBodyLbl)
 
         fun bindMessage(context: Context, message: Message) {
             val resourceId = context.resources.getIdentifier(

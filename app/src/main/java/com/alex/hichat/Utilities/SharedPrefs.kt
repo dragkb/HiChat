@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.android.volley.toolbox.Volley
 
+@Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class SharedPrefs(context: Context) {
 
     val PREFS_FILE_NAME = "prefs"
