@@ -5,6 +5,7 @@ import android.support.test.espresso.Espresso.onData
 import android.support.test.espresso.Espresso.onView
 import android.support.test.espresso.ViewInteraction
 import android.support.test.espresso.action.ViewActions.click
+import android.support.test.espresso.action.ViewActions.swipeUp
 import android.support.test.espresso.action.ViewActions.typeText
 import android.support.test.espresso.assertion.PositionAssertions.isCompletelyAbove
 import android.support.test.espresso.assertion.PositionAssertions.isCompletelyLeftOf
@@ -106,6 +107,12 @@ class LoggedInScreen : BaseScreen() {
     }
 
     fun assertNewChannelSuccessfullyCreated(newChannelName: String) {
+        onData(anything())
+            .inAdapterView(withId(R.id.channel_list))
+            .atPosition(MessageService.channels.indexOf(MessageService.channels.last()))
+            .check(matches(isDisplayed()))
+//        onView(withId(R.id.channel_list)).perform(swipeUp())
+
         onView(
             allOf(
                 withText("#$newChannelName"), isDescendantOfA(withId(R.id.channel_list))
