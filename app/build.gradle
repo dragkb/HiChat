@@ -6,8 +6,10 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.shazam.fork'
 
 repositories {
+    mavenCentral()
     maven { url 'https://maven.fabric.io/public' }
 }
+
 
 android {
     compileSdkVersion 28
