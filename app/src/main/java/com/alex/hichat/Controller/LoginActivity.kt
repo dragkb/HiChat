@@ -19,6 +19,7 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
         // Make progress spinner invisible
         loginSpinner.visibility = View.INVISIBLE
+        // TODO remove spinner
     }
 
     fun loginLoginBtnClicked(view: View) {

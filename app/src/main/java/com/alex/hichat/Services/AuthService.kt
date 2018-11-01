@@ -41,19 +41,16 @@ object AuthService {
                     IdlingResourceHolder.networkIdlingResource.dumpStateToLogs()
                 }
             }, Response.ErrorListener { error ->
-                try {
                     // if error print to logcat DEBUG and set complete to false
                     Log.d("ERROR", "Could not register user: $error")
-                } finally {
                     IdlingResourceHolder.networkIdlingResource.decrement()
-                    IdlingResourceHolder.networkIdlingResource.dumpStateToLogs()
-                }
             }) {
             // Same as Postman Content-type
+            // TODO: change to =
             override fun getBodyContentType(): String {
                 return "application/json; charset=utf-8"
             }
-
+            // TODO: change to =
             // Return a String from JSONObject and convert to ByteArray
             override fun getBody(): ByteArray {
                 return requestBody.toByteArray()
@@ -96,14 +93,10 @@ object AuthService {
                     IdlingResourceHolder.networkIdlingResource.dumpStateToLogs()
                 }
             }, Response.ErrorListener { error ->
-                try {
                     // This is where we deal with errors
                     Log.d("ERROR", "Was not able to login: $error")
                     complete(false)
-                } finally {
                     IdlingResourceHolder.networkIdlingResource.decrement()
-                    IdlingResourceHolder.networkIdlingResource.dumpStateToLogs()
-                }
             }) {
 
             override fun getBodyContentType(): String {

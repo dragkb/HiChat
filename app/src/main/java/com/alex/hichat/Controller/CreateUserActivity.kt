@@ -78,6 +78,7 @@ class CreateUserActivity : AppCompatActivity() {
         if (userName.isNotEmpty() && email.isNotEmpty() && password.isNotEmpty()) {
             AuthService.registerUser(email, password) { registerSuccess ->
                 if (registerSuccess) {
+
                     AuthService.loginUser(email, password) { loginSuccess ->
                         if (loginSuccess) {
                             AuthService.createUser(userName, email, userAvatar, avatarColor) { createSuccess ->
