@@ -34,5 +34,4 @@
                 android:name="io.fabric.ApiKey"
                 android:value="6772d1e2d2acdc500165d1db019a9518dc1f537b" />
     </application>
-    <uses-permission android:name="android.permission.INTERNET" />
 </manifest>

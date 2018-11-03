@@ -36,8 +36,6 @@ class ChannelTests {
     @After
     fun logoutAndIdlingResourceUnregister() {
         IdlingRegistry.getInstance().unregister(IdlingResourceHolder.networkIdlingResource)
-        val loggedInScreen = LoggedInScreen()
-        loggedInScreen.clickOnLogoutBtn()
     }
 
     @Test
@@ -47,6 +45,7 @@ class ChannelTests {
         loggedInScreen.clickOnAddChannelBtn()
         loggedInScreen.assertDialogPoppedUp()
         loggedInScreen.clickOnDialogCancelBtn()
+        loggedInScreen.clickOnLogoutBtn()
     }
 
     @Test
@@ -58,6 +57,7 @@ class ChannelTests {
         loggedInScreen.typeDialogChannelDescription(channelDesc)
         loggedInScreen.clickOnDialogAddBtn()
         loggedInScreen.assertNewChannelSuccessfullyCreated(channelNameGenerator)
+        loggedInScreen.clickOnLogoutBtn()
     }
 
     @Test
@@ -68,5 +68,6 @@ class ChannelTests {
         loggedInScreen.assertChannelRoomIsClicked(channelName)
         val mainScreen = MainScreen()
         mainScreen.clickOnHamburgerBtnMain()
+        loggedInScreen.clickOnLogoutBtn()
     }
 }
