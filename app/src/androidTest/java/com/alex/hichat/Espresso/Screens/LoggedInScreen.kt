@@ -10,7 +10,9 @@ import android.support.test.espresso.action.ViewActions.typeText
 import android.support.test.espresso.assertion.PositionAssertions.isCompletelyAbove
 import android.support.test.espresso.assertion.PositionAssertions.isCompletelyLeftOf
 import android.support.test.espresso.assertion.ViewAssertions.matches
+import android.support.test.espresso.contrib.RecyclerViewActions
 import android.support.test.espresso.matcher.ViewMatchers
+import android.support.test.espresso.matcher.ViewMatchers.hasDescendant
 import android.support.test.espresso.matcher.ViewMatchers.isClickable
 import android.support.test.espresso.matcher.ViewMatchers.isDescendantOfA
 import android.support.test.espresso.matcher.ViewMatchers.isDisplayed
@@ -178,6 +180,13 @@ class LoggedInScreen : BaseScreen() {
     }
 
     fun assertMessageHasSent(messageText: String) {
-        onView(withText(messageText)).check(matches(isDisplayed()))
+        onView(withId(R.id.messageListView))
+            .check(
+                matches(
+                    allOf(
+                        hasDescendant(withText(messageText)), hasDescendant(withId(R.id.messageBodyLbl))
+                    )
+                )
+            )
     }
 }
