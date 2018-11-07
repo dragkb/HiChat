@@ -29,7 +29,6 @@ class ToastTests {
     private val userLala = OldUser("lala@gmail.com", "123456")
     private val userUnknown = OldUser("abra_kadabra@wow.com", "12345678910")
 
-
     @Before
     fun loginAndIdlingResourceRegister() {
         IdlingRegistry.getInstance().register(IdlingResourceHolder.networkIdlingResource)
@@ -47,7 +46,7 @@ class ToastTests {
         val toastsPopUps = ToastPopUps()
         toastsPopUps.assertLoginToastSomethingWrong(myActivityTestRule)
     }
-
+    // TODO do all static
     @Test
     fun loginToastFillBothEmailAndPasswordFieldsTest() {
         TasksMainLogin.loginMain()

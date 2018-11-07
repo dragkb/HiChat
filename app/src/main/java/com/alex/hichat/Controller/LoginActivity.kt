@@ -9,7 +9,6 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import com.alex.hichat.R
 import com.alex.hichat.Services.AuthService
-import com.alex.hichat.Utilities.IdlingResourceHolder
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity() {
@@ -45,7 +44,9 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
         } else {
-            Toast.makeText(this, R.string.toast_fill_both_email_password_fields, Toast.LENGTH_LONG).show()
+            Toast.makeText(this,
+                R.string.toast_fill_both_email_password_fields,
+                Toast.LENGTH_LONG).show()
             enableSpinner(false)
         }
     }

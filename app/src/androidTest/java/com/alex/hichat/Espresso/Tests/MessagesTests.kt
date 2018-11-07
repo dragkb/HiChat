@@ -28,7 +28,8 @@ class MessagesTests {
     private val channelNameGenerator = "Test - $randomNumberGen"
     private val channelDesc = "test"
     private val testMessageTxt = "I want to live $randomNumberGen years."
-    private val answerMessageText = "What if I could eat $randomNumberGen sausages for 5 min??? Hmm..."
+    private val answerMessageText = "What if I could eat " +
+        "$randomNumberGen sausages for 5 min??? Hmm..."
     private val respondMessageText = "You would be pretty full. I think :)"
     private val conversationVijay = "What an amazing Demo!!! What do you think, Bill?"
     private val conversationBill = "Yeh, 100% agreed! Alex you are cool! Lala, what's up?"

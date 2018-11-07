@@ -5,7 +5,8 @@ import android.content.Intent
 import android.support.v4.content.LocalBroadcastManager
 import android.util.Log
 import com.alex.hichat.Controller.App
-import com.alex.hichat.Utilities.*
+import com.alex.hichat.Utilities.IdlingResourceHolder
+import com.alex.hichat.Utilities.URL_REGISTER
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.StringRequest
@@ -111,8 +112,13 @@ object AuthService {
         App.sharedPrefs.requestQueue.add(loginRequest)
     }
 
-    fun createUser(name: String, email: String, avatarName: String, avatarColor: String, complete: (Boolean) -> Unit) {
-
+    fun createUser(
+        name: String,
+        email: String,
+        avatarName: String,
+        avatarColor: String,
+        complete: (Boolean) -> Unit
+    ) {
         // All parameters are referred to the Postman request body
         val jsonBody = JSONObject()
         jsonBody.put("name", name)

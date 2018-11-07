@@ -5,7 +5,6 @@ import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
 import com.alex.hichat.Controller.MainActivity
 import com.alex.hichat.Espresso.Model.OldUser
-import com.alex.hichat.Espresso.Screens.LoggedInScreen
 import com.alex.hichat.Espresso.Screens.MainScreen
 import com.alex.hichat.Utilities.IdlingResourceHolder
 import com.alex.hichat.Espresso.Tasks.TasksMainLogin

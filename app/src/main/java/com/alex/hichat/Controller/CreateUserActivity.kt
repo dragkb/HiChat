@@ -10,7 +10,6 @@ import android.widget.Toast
 import com.alex.hichat.R
 import com.alex.hichat.Services.AuthService
 import com.alex.hichat.Utilities.BROADCAST_USER_DATA_CHANGE
-import com.alex.hichat.Utilities.IdlingResourceHolder
 import kotlinx.android.synthetic.main.activity_create_user.*
 import java.util.Random
 
@@ -81,12 +80,17 @@ class CreateUserActivity : AppCompatActivity() {
 
                     AuthService.loginUser(email, password) { loginSuccess ->
                         if (loginSuccess) {
-                            AuthService.createUser(userName, email, userAvatar, avatarColor) { createSuccess ->
+                            AuthService.createUser(
+                                userName,
+                                email,
+                                userAvatar, avatarColor) { createSuccess ->
                                 if (createSuccess) {
                                     // Create an Intent for broadcast
                                     val userDataChanged = Intent(BROADCAST_USER_DATA_CHANGE)
                                     // Creating broadcast which saying that data changed to other activities
-                                    LocalBroadcastManager.getInstance(this).sendBroadcast(userDataChanged)
+                                    LocalBroadcastManager
+                                        .getInstance(this)
+                                        .sendBroadcast(userDataChanged)
                                     enableSpinner(false)
                                     finish() // For dismiss activity use method finish()
                                     // Idling resource decrement

@@ -6,4 +6,4 @@ class NewUser constructor(
     val userPassword: String,
     val avatarClicks: Int,
     val backgroundClicks: Int
-    )
+)

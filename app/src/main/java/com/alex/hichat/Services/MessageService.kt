@@ -24,7 +24,7 @@ object MessageService {
     fun getChannels(complete: (Boolean) -> Unit) {
         // Idling resource increment()
         IdlingResourceHolder.networkIdlingResource.increment()
-        //TODO wrap for JsonArrayRequest idling resource
+        // TODO wrap for JsonArrayRequest idling resource
         val channelsRequest = object : JsonArrayRequest(
             Method.GET, URL_GET_CHANNELS, null, Response.Listener { response ->
             // Looping through array of JSON objects to get all channels available

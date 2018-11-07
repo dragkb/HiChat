@@ -257,7 +257,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun sendMessageBtnClicked(view: View) {
-        if (App.sharedPrefs.isLoggedIn && messageTxtField.text.isNotEmpty() && selectedChannel != null) {
+        if (App.sharedPrefs.isLoggedIn &&
+            messageTxtField.text.isNotEmpty() &&
+            selectedChannel != null) {
             val userId = UserDataService.id
             val channelId = selectedChannel!!.id
             socket.emit("newMessage", messageTxtField.text.toString(), userId, channelId,
@@ -269,7 +271,8 @@ class MainActivity : AppCompatActivity() {
 
     // Hiding soft keyboard
     fun hideKeyboard() {
-        val inputManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        val inputManager = getSystemService(Context.INPUT_METHOD_SERVICE)
+            as InputMethodManager
         if (inputManager.isAcceptingText) {
             inputManager.hideSoftInputFromWindow(currentFocus.windowToken, 0)
         }

@@ -1,16 +1,13 @@
 package com.alex.hichat.Espresso.Screens
 
-
 import android.support.test.espresso.Espresso.onData
 import android.support.test.espresso.Espresso.onView
 import android.support.test.espresso.ViewInteraction
 import android.support.test.espresso.action.ViewActions.click
-import android.support.test.espresso.action.ViewActions.swipeUp
 import android.support.test.espresso.action.ViewActions.typeText
 import android.support.test.espresso.assertion.PositionAssertions.isCompletelyAbove
 import android.support.test.espresso.assertion.PositionAssertions.isCompletelyLeftOf
 import android.support.test.espresso.assertion.ViewAssertions.matches
-import android.support.test.espresso.contrib.RecyclerViewActions
 import android.support.test.espresso.matcher.ViewMatchers
 import android.support.test.espresso.matcher.ViewMatchers.hasDescendant
 import android.support.test.espresso.matcher.ViewMatchers.isClickable
@@ -184,7 +181,8 @@ class LoggedInScreen : BaseScreen() {
             .check(
                 matches(
                     allOf(
-                        hasDescendant(withText(messageText)), hasDescendant(withId(R.id.messageBodyLbl))
+                        hasDescendant(withText(messageText)),
+                        hasDescendant(withId(R.id.messageBodyLbl))
                     )
                 )
             )
