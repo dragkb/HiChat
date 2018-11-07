@@ -5,7 +5,11 @@ import android.content.Intent
 import android.support.v4.content.LocalBroadcastManager
 import android.util.Log
 import com.alex.hichat.Controller.App
+import com.alex.hichat.Utilities.BROADCAST_USER_DATA_CHANGE
 import com.alex.hichat.Utilities.IdlingResourceHolder
+import com.alex.hichat.Utilities.URL_CREATE_USER
+import com.alex.hichat.Utilities.URL_FIND_USER_BY_EMAIL
+import com.alex.hichat.Utilities.URL_LOGIN
 import com.alex.hichat.Utilities.URL_REGISTER
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
