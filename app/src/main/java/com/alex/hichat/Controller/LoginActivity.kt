@@ -34,7 +34,6 @@ class LoginActivity : AppCompatActivity() {
                         if (findSuccess) {
                             enableSpinner(false)
                             finish()
-                            // Idling resource decrement
                         } else {
                             errorToast()
                             enableSpinner(false)
