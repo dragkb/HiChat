@@ -40,7 +40,7 @@ class ChannelTests {
         IdlingRegistry.getInstance().unregister(IdlingResourceHolder.networkIdlingResource)
     }
 
-    @Test(timeout=9000)
+    @Test(timeout=15000)
     fun addChannelBtnInvokeDialogTest() {
         TasksMainLogin.loginMain()
         val loggedInScreen = TasksUserLogin.validLogin(userLala)
