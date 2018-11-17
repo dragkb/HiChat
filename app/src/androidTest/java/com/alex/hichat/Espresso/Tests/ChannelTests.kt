@@ -11,10 +11,13 @@ import com.alex.hichat.Espresso.Tasks.TasksMainLogin
 import com.alex.hichat.Espresso.Tasks.TasksUserLogin
 import org.junit.After
 import org.junit.Before
+import org.junit.FixMethodOrder
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.junit.runners.MethodSorters
 
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @RunWith(AndroidJUnit4::class)
 class ChannelTests {
 
@@ -37,7 +40,7 @@ class ChannelTests {
         IdlingRegistry.getInstance().unregister(IdlingResourceHolder.networkIdlingResource)
     }
 
-    @Test
+    @Test(timeout=9000)
     fun addChannelBtnInvokeDialogTest() {
         TasksMainLogin.loginMain()
         val loggedInScreen = TasksUserLogin.validLogin(userLala)
