@@ -41,4 +41,5 @@ class CreateNewUserTests {
         loggedInScreen.assertUserEmailTest(newUserEmail)
         loggedInScreen.clickOnLogoutBtn()
     }
+
 }

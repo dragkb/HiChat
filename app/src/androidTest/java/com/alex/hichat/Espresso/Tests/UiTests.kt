@@ -164,4 +164,10 @@ class UiTests {
         loggedInScreen.clickOnDialogCancelBtn()
         loggedInScreen.clickOnLogoutBtn()
     }
+
+    @Test
+    fun appNameHeaderPresent() {
+        val mainScreen = MainScreen()
+        mainScreen.assertAppHeaderNamePresent()
+    }
 }

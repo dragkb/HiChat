@@ -49,4 +49,5 @@ class LogInTests {
         loggedInScreen.clickOnLogoutBtn()
         mainScreen.assertThatLoggedOut()
     }
+
 }

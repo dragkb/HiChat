@@ -5,8 +5,8 @@ import android.support.test.espresso.ViewInteraction
 import android.support.test.espresso.action.ViewActions.click
 import android.support.test.espresso.action.ViewActions.replaceText
 import android.support.test.espresso.assertion.ViewAssertions.matches
-import android.support.test.espresso.matcher.ViewMatchers.withId
 import android.support.test.espresso.matcher.ViewMatchers.isDisplayed
+import android.support.test.espresso.matcher.ViewMatchers.withId
 import com.alex.hichat.R
 
 enum class UserClickValidation {
@@ -55,4 +55,5 @@ class LoginScreen : BaseScreen() {
         loginSignUpBtn.perform(click())
         return SignUpScreen()
     }
+
 }

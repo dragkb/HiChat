@@ -1,18 +1,25 @@
 package com.alex.hichat.Espresso.Screens
 
+import android.support.test.InstrumentationRegistry
 import android.support.test.espresso.Espresso.onView
 import android.support.test.espresso.ViewInteraction
 import android.support.test.espresso.action.ViewActions.click
 import android.support.test.espresso.assertion.PositionAssertions.isCompletelyAbove
 import android.support.test.espresso.assertion.PositionAssertions.isCompletelyRightOf
 import android.support.test.espresso.assertion.ViewAssertions.matches
+import android.support.test.espresso.matcher.BoundedMatcher
+import android.support.test.espresso.matcher.ViewMatchers.isAssignableFrom
 import android.support.test.espresso.matcher.ViewMatchers.withId
 import android.support.test.espresso.matcher.ViewMatchers.withContentDescription
 import android.support.test.espresso.matcher.ViewMatchers.isDisplayed
 import android.support.test.espresso.matcher.ViewMatchers.isClickable
 import android.support.test.espresso.matcher.ViewMatchers.withText
+import android.view.View
 import com.alex.hichat.R
+import android.support.v7.widget.Toolbar
 import org.hamcrest.CoreMatchers.allOf
+import org.hamcrest.Description
+import org.hamcrest.Matcher
 
 class MainScreen : BaseScreen() {
 
@@ -30,6 +37,9 @@ class MainScreen : BaseScreen() {
 
     override val uniqueView: ViewInteraction
         get() = hamburgerBtn
+
+    private val titleHeaderName: ViewInteraction
+        get() = onView(isAssignableFrom(Toolbar::class.java))
 
     init {
         uniqueView.check(matches(isDisplayed()))
@@ -84,5 +94,22 @@ class MainScreen : BaseScreen() {
 
     fun assertThatLoggedOut() {
         loginBtn.check(matches(allOf(withText("LOGIN"), isClickable())))
+    }
+
+    fun assertAppHeaderNamePresent() {
+        val title = InstrumentationRegistry.getTargetContext().getString(R.string.app_name)
+        titleHeaderName.check(matches(withToolBarTitle(title)))
+    }
+
+    private fun withToolBarTitle(expectedTitle: CharSequence): Matcher<View> {
+        return object : BoundedMatcher<View, Toolbar>(Toolbar::class.java) {
+            override fun describeTo(description: Description?) {
+                description?.appendText("with toolbar title: $expectedTitle")
+            }
+
+            override fun matchesSafely(toolbar: Toolbar?): Boolean {
+                return expectedTitle == toolbar?.title
+            }
+        }
     }
 }
